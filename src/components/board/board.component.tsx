@@ -19,6 +19,7 @@ interface BoardProps {
   }[];
   setBoardName: (id: string, newValue: string) => void;
   addNewCard: (id: string, newValue: string) => void;
+  addNewComment: (boardId: string, cardId: string, value: string) => void;
 }
 
 const Board: React.FC<BoardProps> = ({
@@ -26,6 +27,7 @@ const Board: React.FC<BoardProps> = ({
   data,
   setBoardName,
   addNewCard,
+  addNewComment,
 }) => {
   return (
     <div className="board__wrapper">
@@ -36,6 +38,7 @@ const Board: React.FC<BoardProps> = ({
             item={item}
             setBoardName={setBoardName}
             addNewCard={addNewCard}
+            addNewComment={addNewComment}
           />
         );
       })}

@@ -134,6 +134,42 @@ const App: React.FC = () => {
     );
   };
 
+  const addNewComment = (
+    boardId: string,
+    cardId: string,
+    value: string
+  ): void => {
+    setBoardData(
+      boardData.map((item) => {
+        if (item.id === boardId) {
+          item.cards.map((card) => {
+            if (card.id === cardId) {
+              card.comments.push({ name: user, text: value, id: nanoid() });
+            }
+            return card;
+          });
+        }
+        return item;
+      })
+    );
+  };
+
+  const addNewDecription = (boardId: string, cardId: string, value: string) => {
+    setBoardData(
+      boardData.map((item) => {
+        if (item.id === boardId) {
+          item.cards.map((card) => {
+            if (card.id === cardId) {
+              card.description = value;
+            }
+            return card;
+          });
+        }
+        return item;
+      })
+    );
+  };
+
   return (
     <div className="App">
       {user ? (
@@ -142,6 +178,7 @@ const App: React.FC = () => {
           data={boardData}
           setBoardName={setBoardName}
           addNewCard={addNewCard}
+          addNewComment={addNewComment}
         />
       ) : (
         <CustomModal

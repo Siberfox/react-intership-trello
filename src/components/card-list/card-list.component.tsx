@@ -20,9 +20,15 @@ interface CardProps {
   };
   setBoardName: (id: string, newValue: string) => void;
   addNewCard: (id: string, newValue: string) => void;
+  addNewComment: (boardId: string, cardId: string, value: string) => void;
 }
 
-const CardList: React.FC<CardProps> = ({ item, setBoardName, addNewCard }) => {
+const CardList: React.FC<CardProps> = ({
+  item,
+  setBoardName,
+  addNewCard,
+  addNewComment,
+}) => {
   const [show, setShow] = useState(false);
   const [inputBoardName, setInputBoardName] = useState("");
   const [inputNewCard, setInputNewCard] = useState("");
@@ -93,6 +99,10 @@ const CardList: React.FC<CardProps> = ({ item, setBoardName, addNewCard }) => {
               name={i.cardName}
               description={i.description}
               comments={i.comments}
+              boardName={item.boardName}
+              boardId={item.id}
+              cardId={i.id}
+              addNewComment={addNewComment}
             />
           );
         }

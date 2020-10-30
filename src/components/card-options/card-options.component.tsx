@@ -6,10 +6,14 @@ import "./card-options.styles.scss";
 
 interface CardOptionsProps {
   name: string;
+  cardId: string;
+  boardId: string;
   description: string;
+  boardName: string;
   comments: { name: string; text: string; id: string }[];
   show: boolean;
   onHide: () => void;
+  addNewComment: (boardId: string, cardId: string, value: string) => void;
 }
 
 const CardOptions: React.FC<CardOptionsProps> = ({
@@ -17,7 +21,11 @@ const CardOptions: React.FC<CardOptionsProps> = ({
   show,
   onHide,
   description,
+  boardName,
   comments,
+  cardId,
+  boardId,
+  addNewComment,
 }) => {
   return (
     <div onClick={(e) => e.stopPropagation()}>
@@ -30,7 +38,9 @@ const CardOptions: React.FC<CardOptionsProps> = ({
         backdrop="static"
       >
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">{name}</Modal.Title>
+          <Modal.Title id="contained-modal-title-vcenter">
+            {boardName} &gt; {name}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body className="card-options__body">
           <h3>Описание</h3>
@@ -58,7 +68,12 @@ const CardOptions: React.FC<CardOptionsProps> = ({
               aria-describedby="basic-addon2"
             />
             <InputGroup.Append>
-              <Button variant="outline-success">Сохранить</Button>
+              <Button
+                variant="outline-success"
+                onClick={() => addNewComment(boardId, cardId, "New comment")}
+              >
+                Сохранить
+              </Button>
             </InputGroup.Append>
           </InputGroup>
           <ul className="comments-list">
