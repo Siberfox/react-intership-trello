@@ -15,34 +15,53 @@ const App: React.FC = () => {
       id: nanoid(),
       boardName: "TODO",
       cards: [
-        { cardName: "create page" },
-        { cardName: "add feature" },
-        { cardName: "deploy" },
+        {
+          cardName: "create page",
+          id: nanoid(),
+          comments: [{ text: "LOL" }, { text: "NO... no no no please no" }],
+        },
+        { cardName: "add feature", id: nanoid(), comments: [] },
+        { cardName: "deploy", id: nanoid(), comments: [] },
       ],
     },
     {
       id: nanoid(),
       boardName: "In Progress",
-      cards: [{ cardName: "design for new page" }],
+      cards: [{ cardName: "design for new page", id: nanoid(), comments: [] }],
     },
     {
       id: nanoid(),
       boardName: "Testing",
-      cards: [{ cardName: "write unit tests" }, { cardName: "hand testing" }],
+      cards: [
+        { cardName: "write unit tests", id: nanoid(), comments: [] },
+        {
+          cardName: "hand testing",
+          id: nanoid(),
+          comments: [{ text: "good luck!" }],
+        },
+      ],
     },
     {
       id: nanoid(),
       boardName: "Done",
-      cards: [{ cardName: "create architecture" }],
+      cards: [{ cardName: "create architecture", id: nanoid(), comments: [] }],
     },
   ]);
 
   useEffect(() => {
-    let storageValue = localStorage.getItem("username");
-    if (storageValue) {
-      setUser(storageValue);
+    let storageNameValue = localStorage.getItem("username");
+    if (storageNameValue) {
+      setUser(storageNameValue);
+    }
+    let storageBoardValue = localStorage.getItem("board");
+    if (storageBoardValue) {
+      setBoardData(JSON.parse(storageBoardValue));
     }
   }, []);
+
+  // useEffect(() => {
+  //   localStorage.setItem("board", JSON.stringify(boardData));
+  // }, [boardData]);
 
   const setUserName = (value: string): void => {
     setUser(value);
@@ -60,10 +79,26 @@ const App: React.FC = () => {
     );
   };
 
+  const addNewCard = (id: string, newValue: string): void => {
+    setBoardData(
+      boardData.map((item) => {
+        if (item.id === id) {
+          item.cards.push({ cardName: newValue, id: nanoid(), comments: [] });
+        }
+        return item;
+      })
+    );
+  };
+
   return (
     <div className="App">
       {user ? (
-        <Board username={user} data={boardData} setBoardName={setBoardName} />
+        <Board
+          username={user}
+          data={boardData}
+          setBoardName={setBoardName}
+          addNewCard={addNewCard}
+        />
       ) : (
         <CustomModal
           show={modalShow}

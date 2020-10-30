@@ -49,6 +49,7 @@ const CustomModal: React.FC<modalProps> = ({ show, onHide, setUserName }) => {
           placeholder="Ваше имя..."
           onChange={handleChange}
           onKeyPress={handleKeyPress}
+          autoFocus
         />
       </Modal.Body>
       <Modal.Footer>
