@@ -1,0 +1,39 @@
+.card-list {
+  &__wrapper {
+    width: 17%;
+    height: 400px;
+    background-color: #f1f7ed;
+    border-radius: 7px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+    overflow: auto;
+
+    & h4 {
+      &:hover {
+        color: grey;
+        cursor: pointer;
+      }
+    }
+  }
+
+  &__new-card {
+    color: #66cc69;
+    width: 95%;
+    height: 28px;
+    border: none;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: #f1f7ed;
+
+    &:hover {
+      background-color: darken(#f1f7ed, 10%);
+    }
+  }
+}
