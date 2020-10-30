@@ -18,33 +18,72 @@ const App: React.FC = () => {
         {
           cardName: "create page",
           id: nanoid(),
-          comments: [{ text: "LOL" }, { text: "NO... no no no please no" }],
+          description: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur repellendus, nesciunt similique ratione neque aspernatur consequatur veniam exercitationem nostrum quo laborum ipsa, esse nihil pariatur. Ex quasi explicabo fugit unde.`,
+          comments: [
+            { name: "Jessy", text: "LOL", id: nanoid() },
+            {
+              name: "Nancy",
+              text: "Is this lorem ipsum??? Where is real description?",
+              id: nanoid(),
+            },
+          ],
         },
-        { cardName: "add feature", id: nanoid(), comments: [] },
-        { cardName: "deploy", id: nanoid(), comments: [] },
+        {
+          cardName: "add feature",
+          id: nanoid(),
+          description: "",
+          comments: [],
+        },
+        { cardName: "deploy", id: nanoid(), description: "", comments: [] },
       ],
     },
     {
       id: nanoid(),
       boardName: "In Progress",
-      cards: [{ cardName: "design for new page", id: nanoid(), comments: [] }],
+      cards: [
+        {
+          cardName: "design for new page",
+          id: nanoid(),
+          description: "",
+          comments: [
+            {
+              name: "Michael Scott",
+              text: "NO... no no no please no",
+              id: nanoid(),
+            },
+          ],
+        },
+      ],
     },
     {
       id: nanoid(),
       boardName: "Testing",
       cards: [
-        { cardName: "write unit tests", id: nanoid(), comments: [] },
+        {
+          cardName: "write unit tests",
+          id: nanoid(),
+          description: "",
+          comments: [],
+        },
         {
           cardName: "hand testing",
           id: nanoid(),
-          comments: [{ text: "good luck!" }],
+          description: "",
+          comments: [{ name: "Chief", text: "good luck!", id: nanoid() }],
         },
       ],
     },
     {
       id: nanoid(),
       boardName: "Done",
-      cards: [{ cardName: "create architecture", id: nanoid(), comments: [] }],
+      cards: [
+        {
+          cardName: "create architecture",
+          id: nanoid(),
+          description: "",
+          comments: [],
+        },
+      ],
     },
   ]);
 
@@ -83,7 +122,12 @@ const App: React.FC = () => {
     setBoardData(
       boardData.map((item) => {
         if (item.id === id) {
-          item.cards.push({ cardName: newValue, id: nanoid(), comments: [] });
+          item.cards.push({
+            cardName: newValue,
+            id: nanoid(),
+            description: "",
+            comments: [],
+          });
         }
         return item;
       })

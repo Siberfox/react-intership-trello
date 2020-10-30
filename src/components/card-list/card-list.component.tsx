@@ -8,7 +8,16 @@ import "./card-list.styles.scss";
 import Plus from "../../assets/plus.svg";
 
 interface CardProps {
-  item: any;
+  item: {
+    id: string;
+    boardName: string;
+    cards: {
+      id: string;
+      cardName: string;
+      description: string;
+      comments: { name: string; text: string; id: string }[];
+    }[];
+  };
   setBoardName: (id: string, newValue: string) => void;
   addNewCard: (id: string, newValue: string) => void;
 }
@@ -71,9 +80,23 @@ const CardList: React.FC<CardProps> = ({ item, setBoardName, addNewCard }) => {
         <h4 onClick={hideBoardName}>{item.boardName}</h4>
       )}
 
-      {item.cards.map((i: any) => {
-        return <Card key={i.id} name={i.cardName} comments={i.comments} />;
-      })}
+      {item.cards.map(
+        (i: {
+          id: string;
+          cardName: string;
+          description: string;
+          comments: { name: string; text: string; id: string }[];
+        }) => {
+          return (
+            <Card
+              key={i.id}
+              name={i.cardName}
+              description={i.description}
+              comments={i.comments}
+            />
+          );
+        }
+      )}
 
       {show ? (
         <Form onSubmit={newCardHandler} className="card-list__form">

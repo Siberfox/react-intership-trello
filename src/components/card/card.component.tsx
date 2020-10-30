@@ -1,15 +1,24 @@
 import React, { useState } from "react";
 
 import Comments from "../../assets/comments.svg";
+import CardOptions from "../card-options/card-options.component";
 
 import "./card.styles.scss";
 
-const Card: React.FC<{ name: string; comments: any[] }> = ({
-  name,
-  comments,
-}) => {
+interface CardProps {
+  name: string;
+  description: string;
+  comments: { name: string; text: string; id: string }[];
+}
+
+const Card: React.FC<CardProps> = ({ name, comments, description }) => {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   return (
-    <div className="card__wrapper">
+    <div className="card__wrapper" onClick={handleShow}>
       <p>{name}</p>
 
       {comments.length ? (
@@ -20,6 +29,13 @@ const Card: React.FC<{ name: string; comments: any[] }> = ({
       ) : (
         ""
       )}
+      <CardOptions
+        name={name}
+        show={show}
+        onHide={handleClose}
+        description={description}
+        comments={comments}
+      />
     </div>
   );
 };

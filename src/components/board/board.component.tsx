@@ -1,13 +1,22 @@
 import React from "react";
 
-import CardList from "../card-list/card-list";
+import CardList from "../card-list/card-list.component";
 import Plus from "../../assets/plus.svg";
 
 import "./board.styles.scss";
 
 interface BoardProps {
   username: string;
-  data: any[];
+  data: {
+    id: string;
+    boardName: string;
+    cards: {
+      id: string;
+      cardName: string;
+      description: string;
+      comments: { name: string; text: string; id: string }[];
+    }[];
+  }[];
   setBoardName: (id: string, newValue: string) => void;
   addNewCard: (id: string, newValue: string) => void;
 }
