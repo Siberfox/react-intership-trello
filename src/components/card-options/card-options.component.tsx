@@ -9,6 +9,7 @@ import CardTitleSection from "../card-title-section/card-title-section.component
 import "./card-options.styles.scss";
 
 interface CardOptionsProps {
+  username: string;
   cardName: string;
   cardId: string;
   columnId: string;
@@ -28,6 +29,7 @@ const CardOptions: React.FC<CardOptionsProps> = ({
   comments,
   cardId,
   columnId,
+  username,
 }) => {
   return (
     <div onClick={(e) => e.stopPropagation()}>
@@ -44,6 +46,7 @@ const CardOptions: React.FC<CardOptionsProps> = ({
           columnId={columnId}
           cardName={cardName}
           columnName={columnName}
+          username={username}
         />
         <DescriptionSection
           description={description}
@@ -54,6 +57,7 @@ const CardOptions: React.FC<CardOptionsProps> = ({
           comments={comments}
           cardId={cardId}
           columnId={columnId}
+          username={username}
         />
       </Modal>
     </div>

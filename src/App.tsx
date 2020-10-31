@@ -12,6 +12,15 @@ interface MethodsContextInterface {
   addNewComment: (columnId: string, cardId: string, value: string) => void;
   addNewDecription: (columnId: string, cardId: string, value: string) => void;
   deleteDescription: (columnId: string, cardId: string) => void;
+  editCardName: (columnId: string, cardId: string, newValue: string) => void;
+  deleteCard: (columnId: string, cardId: string) => void;
+  editComment: (
+    columnId: string,
+    cardId: string,
+    commentId: string,
+    newValue: string
+  ) => void;
+  deleteComment: (columnId: string, cardId: string, commentId: string) => void;
 }
 
 export const MethodsContext = React.createContext<
@@ -110,9 +119,9 @@ const App: React.FC = () => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   localStorage.setItem("board", JSON.stringify(boardData));
-  // }, [boardData]);
+  useEffect(() => {
+    localStorage.setItem("board", JSON.stringify(boardData));
+  }, [boardData]);
 
   const setUserName = (value: string): void => {
     setUser(value);
@@ -139,6 +148,52 @@ const App: React.FC = () => {
             id: nanoid(),
             description: "",
             comments: [],
+          });
+        }
+        return item;
+      })
+    );
+  };
+
+  const editCardName = (
+    columnId: string,
+    cardId: string,
+    newValue: string
+  ): void => {
+    setBoardData(
+      boardData.map((item) => {
+        if (item.id === columnId) {
+          item.cards.map((card) => {
+            if (card.id === cardId) {
+              card.cardName = newValue;
+            }
+            return card;
+          });
+        }
+        return item;
+      })
+    );
+  };
+
+  const editComment = (
+    columnId: string,
+    cardId: string,
+    commentId: string,
+    newValue: string
+  ): void => {
+    setBoardData(
+      boardData.map((item) => {
+        if (item.id === columnId) {
+          item.cards.map((card) => {
+            if (card.id === cardId) {
+              card.comments.map((comment) => {
+                if (comment.id === commentId) {
+                  comment.text = newValue;
+                }
+                return comment;
+              });
+            }
+            return card;
           });
         }
         return item;
@@ -202,6 +257,39 @@ const App: React.FC = () => {
     );
   };
 
+  const deleteCard = (columnId: string, cardId: string): void => {
+    setBoardData(
+      boardData.map((item) => {
+        if (item.id === columnId) {
+          item.cards = item.cards.filter((card) => card.id !== cardId);
+        }
+        return item;
+      })
+    );
+  };
+
+  const deleteComment = (
+    columnId: string,
+    cardId: string,
+    commentId: string
+  ): void => {
+    setBoardData(
+      boardData.map((item) => {
+        if (item.id === columnId) {
+          item.cards.map((card) => {
+            if (card.id === cardId) {
+              card.comments = card.comments.filter(
+                (comment) => comment.id !== commentId
+              );
+            }
+            return card;
+          });
+        }
+        return item;
+      })
+    );
+  };
+
   return (
     <div className="App">
       {user ? (
@@ -212,6 +300,10 @@ const App: React.FC = () => {
             addNewComment,
             addNewDecription,
             deleteDescription,
+            editCardName,
+            deleteCard,
+            editComment,
+            deleteComment,
           }}
         >
           <Board username={user} data={boardData} />

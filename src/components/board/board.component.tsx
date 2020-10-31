@@ -23,7 +23,7 @@ const Board: React.FC<BoardProps> = ({ username, data }) => {
   return (
     <div className="board__wrapper">
       {data.map((item) => {
-        return <CardList key={item.id} item={item} />;
+        return <CardList key={item.id} item={item} username={username} />;
       })}
 
       <div className="board__new-card">

@@ -9,6 +9,7 @@ import "./card-list.styles.scss";
 import Plus from "../../assets/plus.svg";
 
 interface CardProps {
+  username: string;
   item: {
     id: string;
     columnName: string;
@@ -21,7 +22,7 @@ interface CardProps {
   };
 }
 
-const CardList: React.FC<CardProps> = ({ item }) => {
+const CardList: React.FC<CardProps> = ({ item, username }) => {
   const [show, setShow] = useState(false);
   const [inputColumnName, setInputColumnName] = useState("");
   const [inputNewCard, setInputNewCard] = useState("");
@@ -97,6 +98,7 @@ const CardList: React.FC<CardProps> = ({ item }) => {
               columnName={item.columnName}
               columnId={item.id}
               cardId={i.id}
+              username={username}
             />
           );
         }

@@ -6,6 +6,7 @@ import CardOptions from "../card-options/card-options.component";
 import "./card.styles.scss";
 
 interface CardProps {
+  username: string;
   cardName: string;
   cardId: string;
   columnName: string;
@@ -21,6 +22,7 @@ const Card: React.FC<CardProps> = ({
   columnName,
   cardId,
   columnId,
+  username,
 }) => {
   const [show, setShow] = useState(false);
 
@@ -48,6 +50,7 @@ const Card: React.FC<CardProps> = ({
         comments={comments}
         columnId={columnId}
         cardId={cardId}
+        username={username}
       />
     </div>
   );

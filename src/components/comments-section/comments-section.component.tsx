@@ -3,11 +3,12 @@ import React, { useState, useContext } from "react";
 import { Modal, Button, FormControl, InputGroup } from "react-bootstrap";
 import { MethodsContext } from "../../App";
 
-import { PencilFill } from "react-bootstrap-icons";
-import { TrashFill } from "react-bootstrap-icons";
+import CommentItem from "../comment-item/comment-item.component";
+
 import "./comments-section.styles.scss";
 
 interface CommentsSectionProps {
+  username: string;
   cardId: string;
   columnId: string;
   comments: { name: string; text: string; id: string }[];
@@ -17,6 +18,7 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
   cardId,
   columnId,
   comments,
+  username,
 }) => {
   const [inputNewComment, setInputNewComment] = useState("");
   const methods = useContext(MethodsContext);
@@ -38,7 +40,7 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
     <Modal.Footer className="card-options__footer">
       <InputGroup className="mb-3">
         <FormControl
-          placeholder="Напишите комментарий..."
+          placeholder="Напишите новый комментарий..."
           aria-label="Напишите комментарий..."
           aria-describedby="basic-addon2"
           onChange={commentHandleChange}
@@ -53,17 +55,15 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
       <ul className="comments-list">
         {comments.map((item) => {
           return (
-            <li key={item.id} className="comments-item">
-              <div className="comments-body">
-                <h5>{item.name}</h5>
-                <p>{item.text}</p>
-              </div>
-
-              <div className="header__icons">
-                <PencilFill className="icon-edit" size={17} />
-                <TrashFill className="icon-delete" size={17} />
-              </div>
-            </li>
+            <CommentItem
+              key={item.id}
+              name={item.name}
+              text={item.text}
+              cardId={cardId}
+              columnId={columnId}
+              commentId={item.id}
+              username={username}
+            />
           );
         })}
       </ul>
