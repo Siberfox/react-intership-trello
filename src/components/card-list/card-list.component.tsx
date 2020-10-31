@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import { FormControl, Form, Button } from "react-bootstrap";
 
 import Card from "../card/card.component";
+import { MethodsContext } from "../../App";
 
 import "./card-list.styles.scss";
 import Plus from "../../assets/plus.svg";
@@ -10,7 +11,7 @@ import Plus from "../../assets/plus.svg";
 interface CardProps {
   item: {
     id: string;
-    boardName: string;
+    columnName: string;
     cards: {
       id: string;
       cardName: string;
@@ -18,37 +19,31 @@ interface CardProps {
       comments: { name: string; text: string; id: string }[];
     }[];
   };
-  setBoardName: (id: string, newValue: string) => void;
-  addNewCard: (id: string, newValue: string) => void;
-  addNewComment: (boardId: string, cardId: string, value: string) => void;
 }
 
-const CardList: React.FC<CardProps> = ({
-  item,
-  setBoardName,
-  addNewCard,
-  addNewComment,
-}) => {
+const CardList: React.FC<CardProps> = ({ item }) => {
   const [show, setShow] = useState(false);
-  const [inputBoardName, setInputBoardName] = useState("");
+  const [inputColumnName, setInputColumnName] = useState("");
   const [inputNewCard, setInputNewCard] = useState("");
-  const [boardNameHidden, setBoardNameHidden] = useState(false);
+  const [columnNameHidden, setColumnNameHidden] = useState(false);
 
-  const hideBoardName = (): void => {
-    setBoardNameHidden(true);
+  const methods = useContext(MethodsContext);
+
+  const hideColumnName = (): void => {
+    setColumnNameHidden(true);
   };
 
-  const showBoardName = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+  const showColumnName = (e: React.KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === "Enter") {
-      setBoardNameHidden(false);
-      if (inputBoardName) {
-        setBoardName(item.id, inputBoardName);
+      setColumnNameHidden(false);
+      if (inputColumnName) {
+        methods?.editColumnName(item.id, inputColumnName);
       }
     }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setInputBoardName(e.target.value);
+    setInputColumnName(e.target.value);
   };
 
   const showNewCardInput = (): void => {
@@ -58,7 +53,7 @@ const CardList: React.FC<CardProps> = ({
   const newCardHandler = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     if (inputNewCard) {
-      addNewCard(item.id, inputNewCard);
+      methods?.addNewCard(item.id, inputNewCard);
       setInputNewCard("");
       setShow(false);
     }
@@ -73,17 +68,17 @@ const CardList: React.FC<CardProps> = ({
 
   return (
     <div className="card-list__wrapper">
-      {boardNameHidden ? (
+      {columnNameHidden ? (
         <FormControl
           autoFocus
           aria-label="Default"
           aria-describedby="inputGroup-sizing-default"
-          placeholder={item.boardName}
+          placeholder={item.columnName}
           onChange={handleChange}
-          onKeyPress={showBoardName}
+          onKeyPress={showColumnName}
         />
       ) : (
-        <h4 onClick={hideBoardName}>{item.boardName}</h4>
+        <h4 onClick={hideColumnName}>{item.columnName}</h4>
       )}
 
       {item.cards.map(
@@ -96,13 +91,12 @@ const CardList: React.FC<CardProps> = ({
           return (
             <Card
               key={i.id}
-              name={i.cardName}
+              cardName={i.cardName}
               description={i.description}
               comments={i.comments}
-              boardName={item.boardName}
-              boardId={item.id}
+              columnName={item.columnName}
+              columnId={item.id}
               cardId={i.id}
-              addNewComment={addNewComment}
             />
           );
         }

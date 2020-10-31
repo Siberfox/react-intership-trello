@@ -1,31 +1,33 @@
 import React from "react";
 
-import { Modal, Button, FormControl, InputGroup } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
+
+import CommentsSection from "../comments-section/comments-section.component";
+import DescriptionSection from "../description-section/description-section.component";
+import CardTitleSection from "../card-title-section/card-title-section.component";
 
 import "./card-options.styles.scss";
 
 interface CardOptionsProps {
-  name: string;
+  cardName: string;
   cardId: string;
-  boardId: string;
+  columnId: string;
   description: string;
-  boardName: string;
+  columnName: string;
   comments: { name: string; text: string; id: string }[];
   show: boolean;
   onHide: () => void;
-  addNewComment: (boardId: string, cardId: string, value: string) => void;
 }
 
 const CardOptions: React.FC<CardOptionsProps> = ({
-  name,
+  cardName,
   show,
   onHide,
   description,
-  boardName,
+  columnName,
   comments,
   cardId,
-  boardId,
-  addNewComment,
+  columnId,
 }) => {
   return (
     <div onClick={(e) => e.stopPropagation()}>
@@ -37,56 +39,22 @@ const CardOptions: React.FC<CardOptionsProps> = ({
         centered
         backdrop="static"
       >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            {boardName} &gt; {name}
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="card-options__body">
-          <h3>Описание</h3>
-          {description ? (
-            <p>{description}</p>
-          ) : (
-            <InputGroup className="mb-3">
-              <FormControl
-                id="basic-url"
-                placeholder="Добавить описание..."
-                aria-label="Добавить описание..."
-                aria-describedby="basic-addon2"
-              />
-              <InputGroup.Append>
-                <Button variant="outline-success">Сохранить</Button>
-              </InputGroup.Append>
-            </InputGroup>
-          )}
-        </Modal.Body>
-        <Modal.Footer className="card-options__footer">
-          <InputGroup className="mb-3">
-            <FormControl
-              placeholder="Напишите комментарий..."
-              aria-label="Напишите комментарий..."
-              aria-describedby="basic-addon2"
-            />
-            <InputGroup.Append>
-              <Button
-                variant="outline-success"
-                onClick={() => addNewComment(boardId, cardId, "New comment")}
-              >
-                Сохранить
-              </Button>
-            </InputGroup.Append>
-          </InputGroup>
-          <ul className="comments-list">
-            {comments.map((item) => {
-              return (
-                <li key={item.id}>
-                  <h5>{item.name}</h5>
-                  <p>{item.text}</p>
-                </li>
-              );
-            })}
-          </ul>
-        </Modal.Footer>
+        <CardTitleSection
+          cardId={cardId}
+          columnId={columnId}
+          cardName={cardName}
+          columnName={columnName}
+        />
+        <DescriptionSection
+          description={description}
+          cardId={cardId}
+          columnId={columnId}
+        />
+        <CommentsSection
+          comments={comments}
+          cardId={cardId}
+          columnId={columnId}
+        />
       </Modal>
     </div>
   );

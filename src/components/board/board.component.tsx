@@ -9,7 +9,7 @@ interface BoardProps {
   username: string;
   data: {
     id: string;
-    boardName: string;
+    columnName: string;
     cards: {
       id: string;
       cardName: string;
@@ -17,30 +17,13 @@ interface BoardProps {
       comments: { name: string; text: string; id: string }[];
     }[];
   }[];
-  setBoardName: (id: string, newValue: string) => void;
-  addNewCard: (id: string, newValue: string) => void;
-  addNewComment: (boardId: string, cardId: string, value: string) => void;
 }
 
-const Board: React.FC<BoardProps> = ({
-  username,
-  data,
-  setBoardName,
-  addNewCard,
-  addNewComment,
-}) => {
+const Board: React.FC<BoardProps> = ({ username, data }) => {
   return (
     <div className="board__wrapper">
       {data.map((item) => {
-        return (
-          <CardList
-            key={item.id}
-            item={item}
-            setBoardName={setBoardName}
-            addNewCard={addNewCard}
-            addNewComment={addNewComment}
-          />
-        );
+        return <CardList key={item.id} item={item} />;
       })}
 
       <div className="board__new-card">

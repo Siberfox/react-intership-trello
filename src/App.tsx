@@ -6,6 +6,18 @@ import Board from "./components/board/board.component";
 
 import "./App.css";
 
+interface MethodsContextInterface {
+  editColumnName: (id: string, newValue: string) => void;
+  addNewCard: (id: string, newValue: string) => void;
+  addNewComment: (columnId: string, cardId: string, value: string) => void;
+  addNewDecription: (columnId: string, cardId: string, value: string) => void;
+  deleteDescription: (columnId: string, cardId: string) => void;
+}
+
+export const MethodsContext = React.createContext<
+  MethodsContextInterface | undefined
+>(undefined);
+
 const App: React.FC = () => {
   const [user, setUser] = useState("");
   const [modalShow, setModalShow] = useState(true);
@@ -13,7 +25,7 @@ const App: React.FC = () => {
   const [boardData, setBoardData] = useState([
     {
       id: nanoid(),
-      boardName: "TODO",
+      columnName: "TODO",
       cards: [
         {
           cardName: "create page",
@@ -39,7 +51,7 @@ const App: React.FC = () => {
     },
     {
       id: nanoid(),
-      boardName: "In Progress",
+      columnName: "In Progress",
       cards: [
         {
           cardName: "design for new page",
@@ -57,7 +69,7 @@ const App: React.FC = () => {
     },
     {
       id: nanoid(),
-      boardName: "Testing",
+      columnName: "Testing",
       cards: [
         {
           cardName: "write unit tests",
@@ -75,7 +87,7 @@ const App: React.FC = () => {
     },
     {
       id: nanoid(),
-      boardName: "Done",
+      columnName: "Done",
       cards: [
         {
           cardName: "create architecture",
@@ -107,11 +119,11 @@ const App: React.FC = () => {
     localStorage.setItem("username", value);
   };
 
-  const setBoardName = (id: string, newValue: string): void => {
+  const editColumnName = (id: string, newValue: string): void => {
     setBoardData(
       boardData.map((item) => {
         if (item.id === id) {
-          item.boardName = newValue;
+          item.columnName = newValue;
         }
         return item;
       })
@@ -135,13 +147,13 @@ const App: React.FC = () => {
   };
 
   const addNewComment = (
-    boardId: string,
+    columnId: string,
     cardId: string,
     value: string
   ): void => {
     setBoardData(
       boardData.map((item) => {
-        if (item.id === boardId) {
+        if (item.id === columnId) {
           item.cards.map((card) => {
             if (card.id === cardId) {
               card.comments.push({ name: user, text: value, id: nanoid() });
@@ -154,10 +166,14 @@ const App: React.FC = () => {
     );
   };
 
-  const addNewDecription = (boardId: string, cardId: string, value: string) => {
+  const addNewDecription = (
+    columnId: string,
+    cardId: string,
+    value: string
+  ) => {
     setBoardData(
       boardData.map((item) => {
-        if (item.id === boardId) {
+        if (item.id === columnId) {
           item.cards.map((card) => {
             if (card.id === cardId) {
               card.description = value;
@@ -170,16 +186,36 @@ const App: React.FC = () => {
     );
   };
 
+  const deleteDescription = (columnId: string, cardId: string): void => {
+    setBoardData(
+      boardData.map((item) => {
+        if (item.id === columnId) {
+          item.cards.map((card) => {
+            if (card.id === cardId) {
+              card.description = "";
+            }
+            return card;
+          });
+        }
+        return item;
+      })
+    );
+  };
+
   return (
     <div className="App">
       {user ? (
-        <Board
-          username={user}
-          data={boardData}
-          setBoardName={setBoardName}
-          addNewCard={addNewCard}
-          addNewComment={addNewComment}
-        />
+        <MethodsContext.Provider
+          value={{
+            editColumnName,
+            addNewCard,
+            addNewComment,
+            addNewDecription,
+            deleteDescription,
+          }}
+        >
+          <Board username={user} data={boardData} />
+        </MethodsContext.Provider>
       ) : (
         <CustomModal
           show={modalShow}

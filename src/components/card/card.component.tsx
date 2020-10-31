@@ -6,23 +6,21 @@ import CardOptions from "../card-options/card-options.component";
 import "./card.styles.scss";
 
 interface CardProps {
-  name: string;
+  cardName: string;
   cardId: string;
-  boardName: string;
-  boardId: string;
+  columnName: string;
+  columnId: string;
   description: string;
   comments: { name: string; text: string; id: string }[];
-  addNewComment: (boardId: string, cardId: string, value: string) => void;
 }
 
 const Card: React.FC<CardProps> = ({
-  name,
+  cardName,
   comments,
   description,
-  boardName,
+  columnName,
   cardId,
-  boardId,
-  addNewComment,
+  columnId,
 }) => {
   const [show, setShow] = useState(false);
 
@@ -31,7 +29,7 @@ const Card: React.FC<CardProps> = ({
 
   return (
     <div className="card__wrapper" onClick={handleShow}>
-      <p>{name}</p>
+      <p>{cardName}</p>
 
       {comments.length ? (
         <div className="comments-icon">
@@ -42,15 +40,14 @@ const Card: React.FC<CardProps> = ({
         ""
       )}
       <CardOptions
-        name={name}
-        boardName={boardName}
+        cardName={cardName}
+        columnName={columnName}
         show={show}
         onHide={handleClose}
         description={description}
         comments={comments}
-        boardId={boardId}
+        columnId={columnId}
         cardId={cardId}
-        addNewComment={addNewComment}
       />
     </div>
   );
