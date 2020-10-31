@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "/react-intership-trello/static/css/main.9593dbc1.chunk.css",
-    "main.js": "/react-intership-trello/static/js/main.fa390873.chunk.js",
-    "main.js.map": "/react-intership-trello/static/js/main.fa390873.chunk.js.map",
-    "runtime-main.js": "/react-intership-trello/static/js/runtime-main.81f6b13b.js",
-    "runtime-main.js.map": "/react-intership-trello/static/js/runtime-main.81f6b13b.js.map",
+    "main.css": "/react-intership-trello/static/css/main.00b9c2e7.chunk.css",
+    "main.js": "/react-intership-trello/static/js/main.09b6f29f.chunk.js",
+    "main.js.map": "/react-intership-trello/static/js/main.09b6f29f.chunk.js.map",
+    "runtime-main.js": "/react-intership-trello/static/js/runtime-main.ac4a19d8.js",
+    "runtime-main.js.map": "/react-intership-trello/static/js/runtime-main.ac4a19d8.js.map",
     "static/css/2.20aa2d7b.chunk.css": "/react-intership-trello/static/css/2.20aa2d7b.chunk.css",
-    "static/js/2.03427443.chunk.js": "/react-intership-trello/static/js/2.03427443.chunk.js",
-    "static/js/2.03427443.chunk.js.map": "/react-intership-trello/static/js/2.03427443.chunk.js.map",
-    "static/js/3.ffffc5dc.chunk.js": "/react-intership-trello/static/js/3.ffffc5dc.chunk.js",
-    "static/js/3.ffffc5dc.chunk.js.map": "/react-intership-trello/static/js/3.ffffc5dc.chunk.js.map",
+    "static/js/2.aa6e53b8.chunk.js": "/react-intership-trello/static/js/2.aa6e53b8.chunk.js",
+    "static/js/2.aa6e53b8.chunk.js.map": "/react-intership-trello/static/js/2.aa6e53b8.chunk.js.map",
+    "static/js/3.f27ff761.chunk.js": "/react-intership-trello/static/js/3.f27ff761.chunk.js",
+    "static/js/3.f27ff761.chunk.js.map": "/react-intership-trello/static/js/3.f27ff761.chunk.js.map",
     "index.html": "/react-intership-trello/index.html",
     "static/css/2.20aa2d7b.chunk.css.map": "/react-intership-trello/static/css/2.20aa2d7b.chunk.css.map",
-    "static/css/main.9593dbc1.chunk.css.map": "/react-intership-trello/static/css/main.9593dbc1.chunk.css.map",
-    "static/js/2.03427443.chunk.js.LICENSE.txt": "/react-intership-trello/static/js/2.03427443.chunk.js.LICENSE.txt",
+    "static/css/main.00b9c2e7.chunk.css.map": "/react-intership-trello/static/css/main.00b9c2e7.chunk.css.map",
+    "static/js/2.aa6e53b8.chunk.js.LICENSE.txt": "/react-intership-trello/static/js/2.aa6e53b8.chunk.js.LICENSE.txt",
     "static/media/comments.44398cb6.svg": "/react-intership-trello/static/media/comments.44398cb6.svg",
     "static/media/plus.05989119.svg": "/react-intership-trello/static/media/plus.05989119.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.81f6b13b.js",
+    "static/js/runtime-main.ac4a19d8.js",
     "static/css/2.20aa2d7b.chunk.css",
-    "static/js/2.03427443.chunk.js",
-    "static/css/main.9593dbc1.chunk.css",
-    "static/js/main.fa390873.chunk.js"
+    "static/js/2.aa6e53b8.chunk.js",
+    "static/css/main.00b9c2e7.chunk.css",
+    "static/js/main.09b6f29f.chunk.js"
   ]
 }
