@@ -3,37 +3,40 @@ import React, { useState, useContext } from "react";
 import { Modal, Button, FormControl, InputGroup } from "react-bootstrap";
 import { MethodsContext } from "../../App";
 
-import CommentItem from "../comment-item/comment-item.component";
+import Comment from "../comment/comment";
 
 import "./comments-section.styles.scss";
 
 interface CommentsSectionProps {
   username: string;
-  cardId: string;
-  columnId: string;
-  comments: { name: string; text: string; id: string }[];
+  cardId: number;
+  comments: {
+    id: number;
+    cardId: number;
+    name: string;
+    text: string;
+  }[];
 }
 
 const CommentsSection: React.FC<CommentsSectionProps> = ({
   cardId,
-  columnId,
-  comments,
   username,
+  comments,
 }) => {
-  const [inputNewComment, setInputNewComment] = useState("");
+  const [newComment, setNewComment] = useState("");
   const methods = useContext(MethodsContext);
 
   const addComment = () => {
-    if (inputNewComment) {
-      methods?.addNewComment(columnId, cardId, inputNewComment);
-      setInputNewComment("");
+    if (newComment) {
+      methods?.addNewComment(cardId, newComment);
+      setNewComment("");
     }
   };
 
   const commentHandleChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    setInputNewComment(e.target.value);
+    setNewComment(e.target.value);
   };
 
   return (
@@ -44,7 +47,7 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
           aria-label="Напишите комментарий..."
           aria-describedby="basic-addon2"
           onChange={commentHandleChange}
-          value={inputNewComment}
+          value={newComment}
         />
         <InputGroup.Append>
           <Button variant="outline-success" onClick={addComment}>
@@ -53,19 +56,19 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
         </InputGroup.Append>
       </InputGroup>
       <ul className="comments-list">
-        {comments.map((item) => {
-          return (
-            <CommentItem
-              key={item.id}
-              name={item.name}
-              text={item.text}
-              cardId={cardId}
-              columnId={columnId}
-              commentId={item.id}
-              username={username}
-            />
-          );
-        })}
+        {comments
+          .filter((item) => item.cardId === cardId)
+          .map((item) => {
+            return (
+              <Comment
+                key={item.id}
+                name={item.name}
+                text={item.text}
+                commentId={item.id}
+                username={username}
+              />
+            );
+          })}
       </ul>
     </Modal.Footer>
   );

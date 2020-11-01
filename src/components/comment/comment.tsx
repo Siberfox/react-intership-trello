@@ -6,33 +6,29 @@ import { MethodsContext } from "../../App";
 import { PencilFill } from "react-bootstrap-icons";
 import { TrashFill } from "react-bootstrap-icons";
 
-import "./comment-item.styles.scss";
+import "./comment.styles.scss";
 
-interface CommentItemProps {
+interface CommentProps {
   name: string;
   text: string;
-  columnId: string;
-  cardId: string;
-  commentId: string;
+  commentId: number;
   username: string;
 }
 
-const CommentItem: React.FC<CommentItemProps> = ({
+const Comment: React.FC<CommentProps> = ({
   name,
   text,
-  columnId,
-  cardId,
   commentId,
   username,
 }) => {
-  const [inputNewComment, setInputNewComment] = useState("");
+  const [newComment, setNewComment] = useState("");
   const [editCommentInput, setEditCommentInput] = useState(false);
   const methods = useContext(MethodsContext);
 
   const editComment = () => {
-    if (inputNewComment) {
-      methods?.editComment(columnId, cardId, commentId, inputNewComment);
-      setInputNewComment("");
+    if (newComment) {
+      methods?.editComment(commentId, newComment);
+      setNewComment("");
     }
     setEditCommentInput(false);
   };
@@ -40,7 +36,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
   const commentHandleChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    setInputNewComment(e.target.value);
+    setNewComment(e.target.value);
   };
 
   return (
@@ -52,7 +48,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
             placeholder="Изменить комментарий..."
             aria-label="Изменить комментарий..."
             aria-describedby="basic-addon2"
-            value={inputNewComment}
+            value={newComment}
             onChange={commentHandleChange}
           />
           <InputGroup.Append>
@@ -83,7 +79,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
               size={17}
               onClick={() =>
                 username === name
-                  ? methods?.deleteComment(columnId, cardId, commentId)
+                  ? methods?.deleteComment(commentId)
                   : alert("Вы не можете удалять чужие сообщения")
               }
             />
@@ -94,4 +90,4 @@ const CommentItem: React.FC<CommentItemProps> = ({
   );
 };
 
-export default CommentItem;
+export default Comment;

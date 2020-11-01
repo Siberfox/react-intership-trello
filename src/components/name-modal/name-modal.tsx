@@ -8,7 +8,7 @@ interface modalProps {
   setUserName: (value: string) => void;
 }
 
-const CustomModal: React.FC<modalProps> = ({ show, onHide, setUserName }) => {
+const NameModal: React.FC<modalProps> = ({ show, onHide, setUserName }) => {
   const [inputValue, setInputValue] = useState("");
 
   const onSubmit = (): void => {
@@ -61,4 +61,4 @@ const CustomModal: React.FC<modalProps> = ({ show, onHide, setUserName }) => {
   );
 };
 
-export default CustomModal;
+export default NameModal;

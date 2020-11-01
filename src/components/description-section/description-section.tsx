@@ -9,32 +9,30 @@ import { TrashFill } from "react-bootstrap-icons";
 import "./description-section.styles.scss";
 
 interface DescriptionSectionProps {
-  cardId: string;
-  columnId: string;
+  cardId: number;
   description: string;
 }
 
 const DescriptionSection: React.FC<DescriptionSectionProps> = ({
   cardId,
-  columnId,
   description,
 }) => {
-  const [inputNewDescription, setInputNewDescription] = useState("");
-  const [editDescriptionInput, setEditDescriptionInput] = useState(false);
+  const [newDescription, setNewDescription] = useState("");
+  const [editDescription, setEditDescription] = useState(false);
   const methods = useContext(MethodsContext);
 
   const addDescription = () => {
-    if (inputNewDescription) {
-      methods?.addNewDecription(columnId, cardId, inputNewDescription);
-      setInputNewDescription("");
+    if (newDescription) {
+      methods?.addNewDecription(cardId, newDescription);
+      setNewDescription("");
     }
-    setEditDescriptionInput(false);
+    setEditDescription(false);
   };
 
   const descriptionHandleChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    setInputNewDescription(e.target.value);
+    setNewDescription(e.target.value);
   };
 
   return (
@@ -45,17 +43,17 @@ const DescriptionSection: React.FC<DescriptionSectionProps> = ({
           <PencilFill
             className="icon-edit"
             size={17}
-            onClick={() => setEditDescriptionInput(true)}
+            onClick={() => setEditDescription(true)}
           />
           <TrashFill
             className="icon-delete"
             size={17}
-            onClick={() => methods?.deleteDescription(columnId, cardId)}
+            onClick={() => methods?.deleteDescription(cardId)}
           />
         </div>
       </div>
 
-      {description && !editDescriptionInput ? (
+      {description && !editDescription ? (
         <>
           <p>{description}</p>
         </>
@@ -67,7 +65,7 @@ const DescriptionSection: React.FC<DescriptionSectionProps> = ({
             aria-label="Добавить описание..."
             aria-describedby="basic-addon2"
             onChange={descriptionHandleChange}
-            value={inputNewDescription}
+            value={newDescription}
           />
           <InputGroup.Append>
             <Button variant="outline-success" onClick={addDescription}>

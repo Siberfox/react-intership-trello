@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 
 import { FormControl, Form, Button } from "react-bootstrap";
 
-import Card from "../card/card.component";
+import Card from "../card/card";
 import { MethodsContext } from "../../App";
 
 import "./card-list.styles.scss";
@@ -11,24 +11,33 @@ import Plus from "../../assets/plus.svg";
 interface CardProps {
   username: string;
   item: {
-    id: string;
+    id: number;
     columnName: string;
-    cards: {
-      id: string;
-      cardName: string;
-      description: string;
-      comments: { name: string; text: string; id: string }[];
-    }[];
   };
+  cards: {
+    id: number;
+    name: string;
+    columnId: number;
+    description: string;
+    author: string;
+    comments: number;
+  }[];
+  comments: {
+    id: number;
+    cardId: number;
+    name: string;
+    text: string;
+  }[];
 }
 
-const CardList: React.FC<CardProps> = ({ item, username }) => {
-  const [show, setShow] = useState(false);
-  const [inputColumnName, setInputColumnName] = useState("");
-  const [inputNewCard, setInputNewCard] = useState("");
+const CardList: React.FC<CardProps> = ({ item, username, cards, comments }) => {
+  const [isShow, setIsShow] = useState(false);
+  const [columnName, setColumnName] = useState("");
+  const [newCard, setNewCard] = useState("");
   const [columnNameHidden, setColumnNameHidden] = useState(false);
 
   const methods = useContext(MethodsContext);
+  const currentCards = cards.filter((card) => card.columnId === item.id);
 
   const hideColumnName = (): void => {
     setColumnNameHidden(true);
@@ -37,34 +46,34 @@ const CardList: React.FC<CardProps> = ({ item, username }) => {
   const showColumnName = (e: React.KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === "Enter") {
       setColumnNameHidden(false);
-      if (inputColumnName) {
-        methods?.editColumnName(item.id, inputColumnName);
+      if (columnName) {
+        methods?.editColumnName(item.id, columnName);
       }
     }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setInputColumnName(e.target.value);
+    setColumnName(e.target.value);
   };
 
   const showNewCardInput = (): void => {
-    setShow(true);
+    setIsShow(true);
   };
 
   const newCardHandler = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    if (inputNewCard) {
-      methods?.addNewCard(item.id, inputNewCard);
-      setInputNewCard("");
-      setShow(false);
+    if (newCard) {
+      methods?.addNewCard(item.id, newCard);
+      setNewCard("");
+      setIsShow(false);
     }
-    setShow(false);
+    setIsShow(false);
   };
 
   const NewCardHandleChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    setInputNewCard(e.target.value);
+    setNewCard(e.target.value);
   };
 
   return (
@@ -82,29 +91,28 @@ const CardList: React.FC<CardProps> = ({ item, username }) => {
         <h4 onClick={hideColumnName}>{item.columnName}</h4>
       )}
 
-      {item.cards.map(
-        (i: {
-          id: string;
-          cardName: string;
+      {currentCards?.map(
+        (card: {
+          name: string;
+          id: number;
+          columnId: number;
           description: string;
-          comments: { name: string; text: string; id: string }[];
+          author: string;
+          comments: number;
         }) => {
           return (
             <Card
-              key={i.id}
-              cardName={i.cardName}
-              description={i.description}
-              comments={i.comments}
-              columnName={item.columnName}
-              columnId={item.id}
-              cardId={i.id}
+              key={card.id}
+              card={card}
               username={username}
+              columnName={item.columnName}
+              comments={comments}
             />
           );
         }
       )}
 
-      {show ? (
+      {isShow ? (
         <Form onSubmit={newCardHandler} className="card-list__form">
           <Form.Group controlId="formBasicPassword">
             <Form.Control

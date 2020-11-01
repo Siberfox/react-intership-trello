@@ -10,35 +10,31 @@ import "./card-title-sectin.styles.scss";
 
 interface CardTitleSectionProps {
   cardName: string;
-  cardId: string;
-  columnId: string;
+  cardId: number;
   columnName: string;
-  username: string;
 }
 
 const CardTitleSection: React.FC<CardTitleSectionProps> = ({
   cardName,
   cardId,
-  columnId,
   columnName,
-  username,
 }) => {
-  const [inputNewCardName, setInputNewCardName] = useState("");
-  const [editCardNameInput, setEditCardNameInput] = useState(false);
+  const [newCardName, setNewCardName] = useState("");
+  const [editCardName, setEditCardName] = useState(false);
   const methods = useContext(MethodsContext);
 
   const addDescription = () => {
-    if (inputNewCardName) {
-      methods?.editCardName(columnId, cardId, inputNewCardName);
-      setInputNewCardName("");
+    if (newCardName) {
+      methods?.editCardName(cardId, newCardName);
+      setNewCardName("");
     }
-    setEditCardNameInput(false);
+    setEditCardName(false);
   };
 
   const cardNameHandleChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    setInputNewCardName(e.target.value);
+    setNewCardName(e.target.value);
   };
 
   return (
@@ -47,7 +43,7 @@ const CardTitleSection: React.FC<CardTitleSectionProps> = ({
         id="contained-modal-title-vcenter"
         className="header__container"
       >
-        {editCardNameInput ? (
+        {editCardName ? (
           <InputGroup className="mb-3">
             <FormControl
               id="basic-url"
@@ -55,7 +51,7 @@ const CardTitleSection: React.FC<CardTitleSectionProps> = ({
               aria-label="Изменить название..."
               aria-describedby="basic-addon2"
               onChange={cardNameHandleChange}
-              value={inputNewCardName}
+              value={newCardName}
             />
             <InputGroup.Append>
               <Button variant="outline-success" onClick={addDescription}>
@@ -72,13 +68,13 @@ const CardTitleSection: React.FC<CardTitleSectionProps> = ({
               <PencilFill
                 className="icon-edit"
                 size={20}
-                onClick={() => setEditCardNameInput(true)}
+                onClick={() => setEditCardName(true)}
               />
               <TrashFill
                 className="icon-delete"
                 size={20}
                 onClick={() => {
-                  methods?.deleteCard(columnId, cardId);
+                  methods?.deleteCard(cardId);
                 }}
               />
             </div>
