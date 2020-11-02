@@ -3,7 +3,7 @@ import React, { useState, useContext } from "react";
 import { FormControl, Form, Button } from "react-bootstrap";
 
 import Card from "../card/card";
-import { MethodsContext } from "../../App";
+import { MethodsContext, CardsContext } from "../../App";
 
 import "./card-list.styles.scss";
 import Plus from "../../assets/plus.svg";
@@ -14,30 +14,17 @@ interface CardProps {
     id: number;
     columnName: string;
   };
-  cards: {
-    id: number;
-    name: string;
-    columnId: number;
-    description: string;
-    author: string;
-    comments: number;
-  }[];
-  comments: {
-    id: number;
-    cardId: number;
-    name: string;
-    text: string;
-  }[];
 }
 
-const CardList: React.FC<CardProps> = ({ item, username, cards, comments }) => {
+const CardList: React.FC<CardProps> = ({ item, username }) => {
   const [isShow, setIsShow] = useState(false);
   const [columnName, setColumnName] = useState("");
   const [newCard, setNewCard] = useState("");
   const [columnNameHidden, setColumnNameHidden] = useState(false);
 
   const methods = useContext(MethodsContext);
-  const currentCards = cards.filter((card) => card.columnId === item.id);
+  const cards = useContext(CardsContext);
+  const currentCards = cards?.filter((card) => card.columnId === item.id);
 
   const hideColumnName = (): void => {
     setColumnNameHidden(true);
@@ -106,7 +93,6 @@ const CardList: React.FC<CardProps> = ({ item, username, cards, comments }) => {
               card={card}
               username={username}
               columnName={item.columnName}
-              comments={comments}
             />
           );
         }

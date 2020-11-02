@@ -17,12 +17,6 @@ interface CardPopupProps {
   columnName: string;
   isShow: boolean;
   onHide: () => void;
-  comments: {
-    id: number;
-    cardId: number;
-    name: string;
-    text: string;
-  }[];
 }
 
 const CardPopup: React.FC<CardPopupProps> = ({
@@ -33,7 +27,6 @@ const CardPopup: React.FC<CardPopupProps> = ({
   columnName,
   cardId,
   username,
-  comments,
   author,
 }) => {
   return (
@@ -53,11 +46,7 @@ const CardPopup: React.FC<CardPopupProps> = ({
           author={author}
         />
         <DescriptionSection description={description} cardId={cardId} />
-        <CommentsSection
-          cardId={cardId}
-          username={username}
-          comments={comments}
-        />
+        <CommentsSection cardId={cardId} username={username} />
       </Modal>
     </div>
   );

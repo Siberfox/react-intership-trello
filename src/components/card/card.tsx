@@ -16,20 +16,9 @@ interface CardProps {
     author: string;
     comments: number;
   };
-  comments: {
-    id: number;
-    cardId: number;
-    name: string;
-    text: string;
-  }[];
 }
 
-const Card: React.FC<CardProps> = ({
-  card,
-  username,
-  columnName,
-  comments,
-}) => {
+const Card: React.FC<CardProps> = ({ card, username, columnName }) => {
   const [isShow, setIsShow] = useState(false);
 
   const handleClose = () => setIsShow(false);
@@ -55,7 +44,6 @@ const Card: React.FC<CardProps> = ({
         description={card.description}
         cardId={card.id}
         username={username}
-        comments={comments}
         author={card.author}
       />
     </div>

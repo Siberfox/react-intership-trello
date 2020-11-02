@@ -11,40 +11,13 @@ interface BoardProps {
     id: number;
     columnName: string;
   }[];
-  cards: {
-    id: number;
-    name: string;
-    columnId: number;
-    description: string;
-    author: string;
-    comments: number;
-  }[];
-  comments: {
-    id: number;
-    cardId: number;
-    name: string;
-    text: string;
-  }[];
 }
 
-const Board: React.FC<BoardProps> = ({
-  username,
-  columns,
-  cards,
-  comments,
-}) => {
+const Board: React.FC<BoardProps> = ({ username, columns }) => {
   return (
     <div className="board__wrapper">
       {columns.map((item) => {
-        return (
-          <CardList
-            key={item.id}
-            item={item}
-            username={username}
-            cards={cards}
-            comments={comments}
-          />
-        );
+        return <CardList key={item.id} item={item} username={username} />;
       })}
 
       <div className="board__new-card">

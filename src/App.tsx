@@ -4,23 +4,22 @@ import NameModal from "./components/name-modal/name-modal";
 import Board from "./components/board/board";
 
 import { Columns, Cards, Comments } from "./data";
+import {
+  MethodsContextInterface,
+  CardsContextInterface,
+  CommentsContextInterface,
+} from "./interfaces";
 
 import "./App.css";
 
-interface MethodsContextInterface {
-  editColumnName: (columnId: number, newValue: string) => void;
-  editCardName: (cardId: number, newValue: string) => void;
-  editComment: (commentId: number, newValue: string) => void;
-  addNewCard: (columnId: number, newValue: string) => void;
-  addNewComment: (cardId: number, newValue: string) => void;
-  addNewDecription: (cardId: number, value: string) => void;
-  deleteDescription: (cardId: number) => void;
-  deleteCard: (cardId: number) => void;
-  deleteComment: (commentId: number) => void;
-}
-
 export const MethodsContext = React.createContext<
   MethodsContextInterface | undefined
+>(undefined);
+export const CardsContext = React.createContext<
+  CardsContextInterface[] | undefined
+>(undefined);
+export const CommentsContext = React.createContext<
+  CommentsContextInterface[] | undefined
 >(undefined);
 
 const App: React.FC = () => {
@@ -174,12 +173,11 @@ const App: React.FC = () => {
             deleteComment,
           }}
         >
-          <Board
-            username={user}
-            columns={columns}
-            cards={cards}
-            comments={comments}
-          />
+          <CardsContext.Provider value={cards}>
+            <CommentsContext.Provider value={comments}>
+              <Board username={user} columns={columns} />
+            </CommentsContext.Provider>
+          </CardsContext.Provider>
         </MethodsContext.Provider>
       ) : (
         <NameModal

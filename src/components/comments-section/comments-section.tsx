@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 
 import { Modal, Button, FormControl, InputGroup } from "react-bootstrap";
-import { MethodsContext } from "../../App";
+import { MethodsContext, CommentsContext } from "../../App";
 
 import Comment from "../comment/comment";
 
@@ -10,21 +10,16 @@ import "./comments-section.styles.scss";
 interface CommentsSectionProps {
   username: string;
   cardId: number;
-  comments: {
-    id: number;
-    cardId: number;
-    name: string;
-    text: string;
-  }[];
 }
 
 const CommentsSection: React.FC<CommentsSectionProps> = ({
   cardId,
   username,
-  comments,
 }) => {
   const [newComment, setNewComment] = useState("");
   const methods = useContext(MethodsContext);
+  const comments = useContext(CommentsContext);
+  const currentComments = comments?.filter((item) => item.cardId === cardId);
 
   const addComment = () => {
     if (newComment) {
@@ -56,19 +51,17 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
         </InputGroup.Append>
       </InputGroup>
       <ul className="comments-list">
-        {comments
-          .filter((item) => item.cardId === cardId)
-          .map((item) => {
-            return (
-              <Comment
-                key={item.id}
-                name={item.name}
-                text={item.text}
-                commentId={item.id}
-                username={username}
-              />
-            );
-          })}
+        {currentComments?.map((item) => {
+          return (
+            <Comment
+              key={item.id}
+              name={item.name}
+              text={item.text}
+              commentId={item.id}
+              username={username}
+            />
+          );
+        })}
       </ul>
     </Modal.Footer>
   );
