@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
 
-import CardList from "../card-list/card-list";
-import Plus from "../../assets/plus.svg";
+import CardList from '../card-list/card-list';
+import Plus from '../../assets/plus.svg';
 
-import "./board.styles.scss";
+import './board.styles.scss';
 
 interface BoardProps {
   username: string;
   columns: {
     id: number;
-    columnName: string;
+    name: string;
   }[];
 }
 

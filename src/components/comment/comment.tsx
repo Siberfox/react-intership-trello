@@ -1,12 +1,12 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext } from 'react';
 
-import { FormControl, InputGroup, Button } from "react-bootstrap";
-import { MethodsContext } from "../../App";
+import { FormControl, InputGroup, Button } from 'react-bootstrap';
 
-import { PencilFill } from "react-bootstrap-icons";
-import { TrashFill } from "react-bootstrap-icons";
+import { PencilFill, TrashFill } from 'react-bootstrap-icons';
 
-import "./comment.styles.scss";
+import { StoreContext } from '../../store-context';
+
+import './comment.styles.scss';
 
 interface CommentProps {
   name: string;
@@ -21,27 +21,25 @@ const Comment: React.FC<CommentProps> = ({
   commentId,
   username,
 }) => {
-  const [newComment, setNewComment] = useState("");
-  const [editCommentInput, setEditCommentInput] = useState(false);
-  const methods = useContext(MethodsContext);
+  const [newComment, setNewComment] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
+  const store = useContext(StoreContext);
 
   const editComment = () => {
     if (newComment) {
-      methods?.editComment(commentId, newComment);
-      setNewComment("");
+      store?.editComment(commentId, newComment);
+      setNewComment('');
     }
-    setEditCommentInput(false);
+    setIsEditing(false);
   };
 
-  const commentHandleChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ): void => {
+  const onCommentChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setNewComment(e.target.value);
   };
 
   return (
     <>
-      {editCommentInput ? (
+      {isEditing ? (
         <InputGroup className="mb-3">
           <FormControl
             id="basic-url"
@@ -49,7 +47,7 @@ const Comment: React.FC<CommentProps> = ({
             aria-label="Изменить комментарий..."
             aria-describedby="basic-addon2"
             value={newComment}
-            onChange={commentHandleChange}
+            onChange={onCommentChange}
           />
           <InputGroup.Append>
             <Button variant="outline-success" onClick={editComment}>
@@ -70,8 +68,8 @@ const Comment: React.FC<CommentProps> = ({
               size={17}
               onClick={() => {
                 username === name
-                  ? setEditCommentInput(true)
-                  : alert("Вы не можете изменять чужие сообщения");
+                  ? setIsEditing(true)
+                  : alert('Вы не можете изменять чужие сообщения');
               }}
             />
             <TrashFill
@@ -79,9 +77,8 @@ const Comment: React.FC<CommentProps> = ({
               size={17}
               onClick={() =>
                 username === name
-                  ? methods?.deleteComment(commentId)
-                  : alert("Вы не можете удалять чужие сообщения")
-              }
+                  ? store?.deleteComment(commentId)
+                  : alert('Вы не можете удалять чужие сообщения')}
             />
           </div>
         </li>

@@ -1,12 +1,12 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext } from 'react';
 
-import { Modal, Button, FormControl, InputGroup } from "react-bootstrap";
-import { MethodsContext } from "../../App";
+import { Modal, Button, FormControl, InputGroup } from 'react-bootstrap';
 
-import { PencilFill } from "react-bootstrap-icons";
-import { TrashFill } from "react-bootstrap-icons";
+import { PencilFill, TrashFill } from 'react-bootstrap-icons';
 
-import "./description-section.styles.scss";
+import { StoreContext } from '../../store-context';
+
+import './description-section.styles.scss';
 
 interface DescriptionSectionProps {
   cardId: number;
@@ -17,20 +17,20 @@ const DescriptionSection: React.FC<DescriptionSectionProps> = ({
   cardId,
   description,
 }) => {
-  const [newDescription, setNewDescription] = useState("");
-  const [editDescription, setEditDescription] = useState(false);
-  const methods = useContext(MethodsContext);
+  const [newDescription, setNewDescription] = useState('');
+  const [isDescriptionEditing, setIsDescriptionEditing] = useState(false);
+  const store = useContext(StoreContext);
 
   const addDescription = () => {
     if (newDescription) {
-      methods?.addNewDecription(cardId, newDescription);
-      setNewDescription("");
+      store?.addNewDecription(cardId, newDescription);
+      setNewDescription('');
     }
-    setEditDescription(false);
+    setIsDescriptionEditing(false);
   };
 
-  const descriptionHandleChange = (
-    e: React.ChangeEvent<HTMLInputElement>
+  const onDescriptionChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
   ): void => {
     setNewDescription(e.target.value);
   };
@@ -43,17 +43,17 @@ const DescriptionSection: React.FC<DescriptionSectionProps> = ({
           <PencilFill
             className="icon-edit"
             size={17}
-            onClick={() => setEditDescription(true)}
+            onClick={() => setIsDescriptionEditing(true)}
           />
           <TrashFill
             className="icon-delete"
             size={17}
-            onClick={() => methods?.deleteDescription(cardId)}
+            onClick={() => store?.deleteDescription(cardId)}
           />
         </div>
       </div>
 
-      {description && !editDescription ? (
+      {description && !isDescriptionEditing ? (
         <>
           <p>{description}</p>
         </>
@@ -64,7 +64,7 @@ const DescriptionSection: React.FC<DescriptionSectionProps> = ({
             placeholder="Добавить описание..."
             aria-label="Добавить описание..."
             aria-describedby="basic-addon2"
-            onChange={descriptionHandleChange}
+            onChange={onDescriptionChange}
             value={newDescription}
           />
           <InputGroup.Append>

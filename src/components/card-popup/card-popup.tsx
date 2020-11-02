@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 
-import { Modal } from "react-bootstrap";
+import { Modal } from 'react-bootstrap';
 
-import CommentsSection from "../comments-section/comments-section";
-import DescriptionSection from "../description-section/description-section";
-import CardTitleSection from "../card-title-section/card-title-section";
+import CommentsSection from '../comments-section/comments-section';
+import DescriptionSection from '../description-section/description-section';
+import CardTitleSection from '../card-title-section/card-title-section';
 
-import "./card-popup.styles.scss";
+import './card-popup.styles.scss';
 
 interface CardPopupProps {
   username: string;
@@ -30,7 +30,7 @@ const CardPopup: React.FC<CardPopupProps> = ({
   author,
 }) => {
   return (
-    <div onClick={(e) => e.stopPropagation()}>
+    <div onClick={(e) => e.stopPropagation()} role='button' onKeyPress={(e) => {if (e.key === 'Enter'){e.stopPropagation();}}} tabIndex={0}>
       <Modal
         show={isShow}
         onHide={onHide}

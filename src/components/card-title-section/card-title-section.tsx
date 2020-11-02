@@ -1,12 +1,12 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext } from 'react';
 
-import { Modal, FormControl, InputGroup, Button } from "react-bootstrap";
-import { MethodsContext } from "../../App";
+import { Modal, FormControl, InputGroup, Button } from 'react-bootstrap';
 
-import { PencilFill } from "react-bootstrap-icons";
-import { TrashFill } from "react-bootstrap-icons";
+import { PencilFill, TrashFill } from 'react-bootstrap-icons';
 
-import "./card-title-sectin.styles.scss";
+import { StoreContext } from '../../store-context';
+
+import './card-title-sectin.styles.scss';
 
 interface CardTitleSectionProps {
   cardName: string;
@@ -21,21 +21,19 @@ const CardTitleSection: React.FC<CardTitleSectionProps> = ({
   columnName,
   author,
 }) => {
-  const [newCardName, setNewCardName] = useState("");
+  const [newCardName, setNewCardName] = useState('');
   const [editCardName, setEditCardName] = useState(false);
-  const methods = useContext(MethodsContext);
+  const store = useContext(StoreContext);
 
   const addDescription = () => {
     if (newCardName) {
-      methods?.editCardName(cardId, newCardName);
-      setNewCardName("");
+      store?.editCardName(cardId, newCardName);
+      setNewCardName('');
     }
     setEditCardName(false);
   };
 
-  const cardNameHandleChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ): void => {
+  const onCardNameChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setNewCardName(e.target.value);
   };
 
@@ -52,7 +50,7 @@ const CardTitleSection: React.FC<CardTitleSectionProps> = ({
               placeholder="Изменить название..."
               aria-label="Изменить название..."
               aria-describedby="basic-addon2"
-              onChange={cardNameHandleChange}
+              onChange={onCardNameChange}
               value={newCardName}
             />
             <InputGroup.Append>
@@ -77,7 +75,7 @@ const CardTitleSection: React.FC<CardTitleSectionProps> = ({
                 className="icon-delete"
                 size={20}
                 onClick={() => {
-                  methods?.deleteCard(cardId);
+                  store?.deleteCard(cardId);
                 }}
               />
             </div>

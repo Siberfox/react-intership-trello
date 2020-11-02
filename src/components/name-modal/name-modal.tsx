@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import { Modal, Button, FormControl } from "react-bootstrap";
+import { Modal, Button, FormControl } from 'react-bootstrap';
 
-interface modalProps {
-  show: boolean;
+interface ModalProps {
+  isShow: boolean;
   onHide: () => void;
   setUserName: (value: string) => void;
 }
 
-const NameModal: React.FC<modalProps> = ({ show, onHide, setUserName }) => {
-  const [inputValue, setInputValue] = useState("");
+const NameModal: React.FC<ModalProps> = ({ isShow, onHide, setUserName }) => {
+  const [inputValue, setInputValue] = useState('');
 
   const onSubmit = (): void => {
     if (inputValue) {
@@ -19,7 +19,7 @@ const NameModal: React.FC<modalProps> = ({ show, onHide, setUserName }) => {
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>): void => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       onSubmit();
     }
   };
@@ -30,7 +30,7 @@ const NameModal: React.FC<modalProps> = ({ show, onHide, setUserName }) => {
 
   return (
     <Modal
-      show={show}
+      show={isShow}
       onHide={onHide}
       size="sm"
       aria-labelledby="contained-modal-title-vcenter"

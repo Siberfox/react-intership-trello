@@ -1,73 +1,60 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable no-param-reassign */
+import React, { useState, useEffect } from 'react';
 
-import NameModal from "./components/name-modal/name-modal";
-import Board from "./components/board/board";
+import NameModal from './components/name-modal/name-modal';
+import Board from './components/board/board';
 
-import { Columns, Cards, Comments } from "./data";
-import {
-  MethodsContextInterface,
-  CardsContextInterface,
-  CommentsContextInterface,
-} from "./interfaces";
+import { Columns, Cards, Comments } from './data';
+import { StoreContext } from './store-context';
 
-import "./App.css";
-
-export const MethodsContext = React.createContext<
-  MethodsContextInterface | undefined
->(undefined);
-export const CardsContext = React.createContext<
-  CardsContextInterface[] | undefined
->(undefined);
-export const CommentsContext = React.createContext<
-  CommentsContextInterface[] | undefined
->(undefined);
+import './App.css';
 
 const App: React.FC = () => {
-  const [user, setUser] = useState("");
-  const [modalShow, setModalShow] = useState(true);
+  const [user, setUser] = useState('');
+  const [isModalShow, setIsModalShow] = useState(true);
 
   const [columns, setColumns] = useState(Columns);
   const [cards, setCards] = useState(Cards);
   const [comments, setComments] = useState(Comments);
 
   useEffect(() => {
-    let storageNameValue = localStorage.getItem("username");
+    const storageNameValue = localStorage.getItem('username');
     if (storageNameValue) {
       setUser(storageNameValue);
     }
-    let storageColumnsValue = localStorage.getItem("columns");
+    const storageColumnsValue = localStorage.getItem('columns');
     if (storageColumnsValue) {
       setColumns(JSON.parse(storageColumnsValue));
     }
-    let storageCardsValue = localStorage.getItem("cards");
+    const storageCardsValue = localStorage.getItem('cards');
     if (storageCardsValue) {
       setCards(JSON.parse(storageCardsValue));
     }
-    let storageCommentsValue = localStorage.getItem("comments");
+    const storageCommentsValue = localStorage.getItem('comments');
     if (storageCommentsValue) {
       setComments(JSON.parse(storageCommentsValue));
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("columns", JSON.stringify(columns));
-    localStorage.setItem("cards", JSON.stringify(cards));
-    localStorage.setItem("comments", JSON.stringify(comments));
+    localStorage.setItem('columns', JSON.stringify(columns));
+    localStorage.setItem('cards', JSON.stringify(cards));
+    localStorage.setItem('comments', JSON.stringify(comments));
   }, [columns, cards, comments]);
 
   const setUserName = (value: string): void => {
     setUser(value);
-    localStorage.setItem("username", value);
+    localStorage.setItem('username', value);
   };
 
   const editColumnName = (columnId: number, newValue: string): void => {
     setColumns(
       columns.map((item) => {
         if (item.id === columnId) {
-          item.columnName = newValue;
+          item.name = newValue;
         }
         return item;
-      })
+      }),
     );
   };
 
@@ -78,7 +65,7 @@ const App: React.FC = () => {
           item.name = newValue;
         }
         return item;
-      })
+      }),
     );
   };
 
@@ -89,7 +76,7 @@ const App: React.FC = () => {
           item.text = newValue;
         }
         return item;
-      })
+      }),
     );
   };
 
@@ -99,10 +86,9 @@ const App: React.FC = () => {
       {
         name: newValue,
         id: cards[cards.length - 1].id + 1,
-        columnId: columnId,
-        description: "",
+        columnId,
+        description: '',
         author: user,
-        comments: 0,
       },
     ]);
   };
@@ -114,27 +100,19 @@ const App: React.FC = () => {
         name: user,
         text: newValue,
         id: comments[comments.length - 1].id + 1,
-        cardId: cardId,
+        cardId,
       },
     ]);
-    setCards(
-      cards.map((item) => {
-        if (item.id === cardId) {
-          item.comments += 1;
-        }
-        return item;
-      })
-    );
   };
 
-  const addNewDecription = (cardId: number, value: string) => {
+  const addNewDecription = (cardId: number, value: string): void => {
     setCards(
       cards.map((item) => {
         if (item.id === cardId) {
           item.description = value;
         }
         return item;
-      })
+      }),
     );
   };
 
@@ -142,10 +120,10 @@ const App: React.FC = () => {
     setCards(
       cards.map((item) => {
         if (item.id === cardId) {
-          item.description = "";
+          item.description = '';
         }
         return item;
-      })
+      }),
     );
   };
 
@@ -160,7 +138,7 @@ const App: React.FC = () => {
   return (
     <div className="App">
       {user ? (
-        <MethodsContext.Provider
+        <StoreContext.Provider
           value={{
             editColumnName,
             addNewCard,
@@ -171,18 +149,16 @@ const App: React.FC = () => {
             deleteCard,
             editComment,
             deleteComment,
+            cards,
+            comments,
           }}
         >
-          <CardsContext.Provider value={cards}>
-            <CommentsContext.Provider value={comments}>
-              <Board username={user} columns={columns} />
-            </CommentsContext.Provider>
-          </CardsContext.Provider>
-        </MethodsContext.Provider>
+          <Board username={user} columns={columns} />
+        </StoreContext.Provider>
       ) : (
         <NameModal
-          show={modalShow}
-          onHide={() => setModalShow(false)}
+          isShow={isModalShow}
+          onHide={() => setIsModalShow(false)}
           setUserName={setUserName}
         />
       )}

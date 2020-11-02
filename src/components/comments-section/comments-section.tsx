@@ -1,11 +1,11 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext } from 'react';
 
-import { Modal, Button, FormControl, InputGroup } from "react-bootstrap";
-import { MethodsContext, CommentsContext } from "../../App";
+import { Modal, Button, FormControl, InputGroup } from 'react-bootstrap';
+import { StoreContext } from '../../store-context';
 
-import Comment from "../comment/comment";
+import Comment from '../comment/comment';
 
-import "./comments-section.styles.scss";
+import './comments-section.styles.scss';
 
 interface CommentsSectionProps {
   username: string;
@@ -16,21 +16,20 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
   cardId,
   username,
 }) => {
-  const [newComment, setNewComment] = useState("");
-  const methods = useContext(MethodsContext);
-  const comments = useContext(CommentsContext);
-  const currentComments = comments?.filter((item) => item.cardId === cardId);
+  const [newComment, setNewComment] = useState('');
+  const store = useContext(StoreContext);
+  const cardComments = store?.comments?.filter(
+    (item) => item.cardId === cardId,
+  );
 
   const addComment = () => {
     if (newComment) {
-      methods?.addNewComment(cardId, newComment);
-      setNewComment("");
+      store?.addNewComment(cardId, newComment);
+      setNewComment('');
     }
   };
 
-  const commentHandleChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ): void => {
+  const onCommentChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setNewComment(e.target.value);
   };
 
@@ -41,7 +40,7 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
           placeholder="Напишите новый комментарий..."
           aria-label="Напишите комментарий..."
           aria-describedby="basic-addon2"
-          onChange={commentHandleChange}
+          onChange={onCommentChange}
           value={newComment}
         />
         <InputGroup.Append>
@@ -51,7 +50,7 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
         </InputGroup.Append>
       </InputGroup>
       <ul className="comments-list">
-        {currentComments?.map((item) => {
+        {cardComments?.map((item) => {
           return (
             <Comment
               key={item.id}
