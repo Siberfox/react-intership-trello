@@ -56,6 +56,7 @@ const Card: React.FC<CardProps> = ({
         cardId={card.id}
         username={username}
         comments={comments}
+        author={card.author}
       />
     </div>
   );

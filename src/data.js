@@ -1,0 +1,82 @@
+export const Columns = [
+  { id: 1, columnName: "TODO" },
+  { id: 2, columnName: "add feature" },
+  { id: 3, columnName: "In Progress" },
+  { id: 4, columnName: "Done" },
+];
+
+export const Cards = [
+  {
+    name: "create page",
+    id: 11,
+    columnId: 1,
+    description: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur repellendus, nesciunt similique ratione neque aspernatur consequatur veniam exercitationem nostrum quo laborum ipsa, esse nihil pariatur. Ex quasi explicabo fugit unde.`,
+    author: "Jack",
+    comments: 2,
+  },
+  {
+    name: "add feature",
+    id: 12,
+    columnId: 1,
+    description: "",
+    author: "Jack",
+    comments: 0,
+  },
+  {
+    name: "deploy",
+    id: 13,
+    columnId: 1,
+    description: "",
+    author: "Phil",
+    comments: 0,
+  },
+  {
+    name: "design for new page",
+    id: 14,
+    columnId: 2,
+    description: "",
+    author: "Helen",
+    comments: 1,
+  },
+  {
+    name: "write unit tests",
+    id: 15,
+    columnId: 3,
+    description: "",
+    author: "Yanis",
+    comments: 0,
+  },
+  {
+    name: "hand testing",
+    id: 16,
+    columnId: 3,
+    description: "",
+    author: "Yanis",
+    comments: 1,
+  },
+  {
+    name: "create architecture",
+    id: 17,
+    columnId: 4,
+    description: "",
+    author: "Jack",
+    comments: 0,
+  },
+];
+
+export const Comments = [
+  { name: "Jessy", text: "LOL", id: 101, cardId: 11 },
+  {
+    name: "Nancy",
+    text: "Is this lorem ipsum??? Where is real description?",
+    id: 102,
+    cardId: 11,
+  },
+  { name: "Chief", text: "good luck!", id: 103, cardId: 14 },
+  {
+    name: "Michael Scott",
+    text: "NO... no no no please no",
+    id: 104,
+    cardId: 16,
+  },
+];

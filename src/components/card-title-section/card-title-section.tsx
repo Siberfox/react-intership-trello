@@ -12,12 +12,14 @@ interface CardTitleSectionProps {
   cardName: string;
   cardId: number;
   columnName: string;
+  author: string;
 }
 
 const CardTitleSection: React.FC<CardTitleSectionProps> = ({
   cardName,
   cardId,
   columnName,
+  author,
 }) => {
   const [newCardName, setNewCardName] = useState("");
   const [editCardName, setEditCardName] = useState(false);
@@ -63,6 +65,7 @@ const CardTitleSection: React.FC<CardTitleSectionProps> = ({
           <>
             <p>
               {columnName} &gt; {cardName}
+              <small>({author})</small>
             </p>
             <div className="header__icons">
               <PencilFill

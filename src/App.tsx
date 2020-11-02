@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import NameModal from "./components/name-modal/name-modal";
 import Board from "./components/board/board";
 
+import { Columns, Cards, Comments } from "./data";
+
 import "./App.css";
 
 interface MethodsContextInterface {
@@ -25,99 +27,34 @@ const App: React.FC = () => {
   const [user, setUser] = useState("");
   const [modalShow, setModalShow] = useState(true);
 
-  const [columns, setColumns] = useState([
-    { id: 1, columnName: "TODO" },
-    { id: 2, columnName: "add feature" },
-    { id: 3, columnName: "In Progress" },
-    { id: 4, columnName: "Done" },
-  ]);
-
-  const [cards, setCards] = useState([
-    {
-      name: "create page",
-      id: 11,
-      columnId: 1,
-      description: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur repellendus, nesciunt similique ratione neque aspernatur consequatur veniam exercitationem nostrum quo laborum ipsa, esse nihil pariatur. Ex quasi explicabo fugit unde.`,
-      author: "Jack",
-      comments: 2,
-    },
-    {
-      name: "add feature",
-      id: 12,
-      columnId: 1,
-      description: "",
-      author: "Jack",
-      comments: 0,
-    },
-    {
-      name: "deploy",
-      id: 13,
-      columnId: 1,
-      description: "",
-      author: "Phil",
-      comments: 0,
-    },
-    {
-      name: "design for new page",
-      id: 14,
-      columnId: 2,
-      description: "",
-      author: "Helen",
-      comments: 1,
-    },
-    {
-      name: "write unit tests",
-      id: 15,
-      columnId: 3,
-      description: "",
-      author: "Yanis",
-      comments: 0,
-    },
-    {
-      name: "hand testing",
-      id: 16,
-      columnId: 3,
-      description: "",
-      author: "Yanis",
-      comments: 1,
-    },
-    {
-      name: "create architecture",
-      id: 17,
-      columnId: 4,
-      description: "",
-      author: "Jack",
-      comments: 0,
-    },
-  ]);
-
-  const [comments, setComments] = useState([
-    { name: "Jessy", text: "LOL", id: 101, cardId: 11 },
-    {
-      name: "Nancy",
-      text: "Is this lorem ipsum??? Where is real description?",
-      id: 102,
-      cardId: 11,
-    },
-    { name: "Chief", text: "good luck!", id: 103, cardId: 14 },
-    {
-      name: "Michael Scott",
-      text: "NO... no no no please no",
-      id: 104,
-      cardId: 16,
-    },
-  ]);
+  const [columns, setColumns] = useState(Columns);
+  const [cards, setCards] = useState(Cards);
+  const [comments, setComments] = useState(Comments);
 
   useEffect(() => {
     let storageNameValue = localStorage.getItem("username");
     if (storageNameValue) {
       setUser(storageNameValue);
     }
+    let storageColumnsValue = localStorage.getItem("columns");
+    if (storageColumnsValue) {
+      setColumns(JSON.parse(storageColumnsValue));
+    }
+    let storageCardsValue = localStorage.getItem("cards");
+    if (storageCardsValue) {
+      setCards(JSON.parse(storageCardsValue));
+    }
+    let storageCommentsValue = localStorage.getItem("comments");
+    if (storageCommentsValue) {
+      setComments(JSON.parse(storageCommentsValue));
+    }
   }, []);
 
-  // useEffect(() => {
-  //   localStorage.setItem("board", JSON.stringify(boardData));
-  // }, [boardData]);
+  useEffect(() => {
+    localStorage.setItem("columns", JSON.stringify(columns));
+    localStorage.setItem("cards", JSON.stringify(cards));
+    localStorage.setItem("comments", JSON.stringify(comments));
+  }, [columns, cards, comments]);
 
   const setUserName = (value: string): void => {
     setUser(value);
