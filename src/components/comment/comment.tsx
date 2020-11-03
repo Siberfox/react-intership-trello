@@ -1,10 +1,12 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { FormControl, InputGroup, Button } from 'react-bootstrap';
-
 import { PencilFill, TrashFill } from 'react-bootstrap-icons';
 
-import { StoreContext } from '../../store-context';
+import { RootState } from '../../redux/root-reducer';
+import { useAppDispatch } from '../../redux/store';
+import { editComment, deleteComment } from '../../redux/comments/comments.actions';
 
 import './comment.styles.scss';
 
@@ -12,22 +14,22 @@ interface CommentProps {
   name: string;
   text: string;
   commentId: number;
-  username: string;
 }
 
 const Comment: React.FC<CommentProps> = ({
   name,
   text,
   commentId,
-  username,
 }) => {
+  const dispatch = useAppDispatch();
   const [newComment, setNewComment] = useState('');
   const [isEditing, setIsEditing] = useState(false);
-  const store = useContext(StoreContext);
 
-  const editComment = () => {
+  const username = useSelector((state:RootState) => state.user.currentUser);
+
+  const onEditComment = () => {
     if (newComment) {
-      store?.editComment(commentId, newComment);
+      dispatch(editComment([commentId, newComment]));
       setNewComment('');
     }
     setIsEditing(false);
@@ -50,7 +52,7 @@ const Comment: React.FC<CommentProps> = ({
             onChange={onCommentChange}
           />
           <InputGroup.Append>
-            <Button variant="outline-success" onClick={editComment}>
+            <Button variant="outline-success" onClick={onEditComment}>
               Сохранить
             </Button>
           </InputGroup.Append>
@@ -77,7 +79,7 @@ const Comment: React.FC<CommentProps> = ({
               size={17}
               onClick={() =>
                 username === name
-                  ? store?.deleteComment(commentId)
+                  ? dispatch(deleteComment(commentId))
                   : alert('Вы не можете удалять чужие сообщения')}
             />
           </div>

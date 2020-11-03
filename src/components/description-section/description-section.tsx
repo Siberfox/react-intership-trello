@@ -1,10 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 
 import { Modal, Button, FormControl, InputGroup } from 'react-bootstrap';
-
 import { PencilFill, TrashFill } from 'react-bootstrap-icons';
 
-import { StoreContext } from '../../store-context';
+import { useAppDispatch } from '../../redux/store';
+import { addDescription, deleteDescription } from '../../redux/cards/cards.actions';
 
 import './description-section.styles.scss';
 
@@ -17,13 +17,13 @@ const DescriptionSection: React.FC<DescriptionSectionProps> = ({
   cardId,
   description,
 }) => {
+  const dispatch = useAppDispatch();
   const [newDescription, setNewDescription] = useState('');
   const [isDescriptionEditing, setIsDescriptionEditing] = useState(false);
-  const store = useContext(StoreContext);
 
-  const addDescription = () => {
+  const onAddDescription = () => {
     if (newDescription) {
-      store?.addNewDecription(cardId, newDescription);
+      dispatch(addDescription([cardId, newDescription]));
       setNewDescription('');
     }
     setIsDescriptionEditing(false);
@@ -48,7 +48,7 @@ const DescriptionSection: React.FC<DescriptionSectionProps> = ({
           <TrashFill
             className="icon-delete"
             size={17}
-            onClick={() => store?.deleteDescription(cardId)}
+            onClick={() => dispatch(deleteDescription(cardId))}
           />
         </div>
       </div>
@@ -68,7 +68,7 @@ const DescriptionSection: React.FC<DescriptionSectionProps> = ({
             value={newDescription}
           />
           <InputGroup.Append>
-            <Button variant="outline-success" onClick={addDescription}>
+            <Button variant="outline-success" onClick={onAddDescription}>
               Сохранить
             </Button>
           </InputGroup.Append>

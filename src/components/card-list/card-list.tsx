@@ -1,29 +1,39 @@
-import React, { useState, useContext } from 'react';
-
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { FormControl, Form, Button } from 'react-bootstrap';
+import { useAppDispatch } from '../../redux/store';
+import { RootState } from '../../redux/root-reducer';
+
+import { editColumnName } from '../../redux/columns/columns.actions';
+import { addCard } from '../../redux/cards/cards.actions';
+
 
 import Card from '../card/card';
-import { StoreContext } from '../../store-context';
 
 import './card-list.styles.scss';
 import Plus from '../../assets/plus.svg';
 
 interface CardProps {
-  username: string;
   item: {
     id: number;
     name: string;
   };
 }
 
-const CardList: React.FC<CardProps> = ({ item, username }) => {
+const CardList: React.FC<CardProps> = ({ item }) => {
+  const dispatch = useAppDispatch();
   const [isShow, setIsShow] = useState(false);
   const [columnName, setColumnName] = useState('');
   const [newCard, setNewCard] = useState('');
   const [columnNameHidden, setColumnNameHidden] = useState(false);
 
-  const store = useContext(StoreContext);
-  const columnCards = store?.cards?.filter((card) => card.columnId === item.id);
+  const columnCards = useSelector((state:RootState) =>
+    state.cards.filter((card) => card.columnId === item.id),
+  );
+  const username = useSelector((state:RootState) =>
+    state.user.currentUser,
+  );
+
 
   const hideColumnName = (): void => {
     setColumnNameHidden(true);
@@ -33,7 +43,7 @@ const CardList: React.FC<CardProps> = ({ item, username }) => {
     if (e.key === 'Enter') {
       setColumnNameHidden(false);
       if (columnName) {
-        store?.editColumnName(item.id, columnName);
+        dispatch(editColumnName([item.id, columnName]));
       }
     }
   };
@@ -53,7 +63,7 @@ const CardList: React.FC<CardProps> = ({ item, username }) => {
   const onNewCardSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     if (newCard) {
-      store?.addNewCard(item.id, newCard);
+      dispatch(addCard([item.id, newCard, username]));
       setNewCard('');
       setIsShow(false);
     }
@@ -87,7 +97,6 @@ const CardList: React.FC<CardProps> = ({ item, username }) => {
             <Card
               key={card.id}
               card={card}
-              username={username}
               columnName={item.name}
             />
           );

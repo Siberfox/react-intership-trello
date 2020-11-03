@@ -9,7 +9,6 @@ import CardTitleSection from '../card-title-section/card-title-section';
 import './card-popup.styles.scss';
 
 interface CardPopupProps {
-  username: string;
   cardName: string;
   cardId: number;
   author: string;
@@ -26,7 +25,6 @@ const CardPopup: React.FC<CardPopupProps> = ({
   description,
   columnName,
   cardId,
-  username,
   author,
 }) => {
   return (
@@ -46,7 +44,7 @@ const CardPopup: React.FC<CardPopupProps> = ({
           author={author}
         />
         <DescriptionSection description={description} cardId={cardId} />
-        <CommentsSection cardId={cardId} username={username} />
+        <CommentsSection cardId={cardId} />
       </Modal>
     </div>
   );

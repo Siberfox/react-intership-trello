@@ -1,23 +1,21 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/root-reducer';
 
 import CardList from '../card-list/card-list';
 import Plus from '../../assets/plus.svg';
 
 import './board.styles.scss';
 
-interface BoardProps {
-  username: string;
-  columns: {
-    id: number;
-    name: string;
-  }[];
-}
+const Board: React.FC = () => {
+  const columns = useSelector((state:RootState) =>
+    state.columns,
+  );
 
-const Board: React.FC<BoardProps> = ({ username, columns }) => {
   return (
     <div className="board__wrapper">
       {columns.map((item) => {
-        return <CardList key={item.id} item={item} username={username} />;
+        return <CardList key={item.id} item={item} />;
       })}
 
       <div className="board__new-card">

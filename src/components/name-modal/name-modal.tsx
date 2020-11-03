@@ -2,19 +2,22 @@ import React, { useState } from 'react';
 
 import { Modal, Button, FormControl } from 'react-bootstrap';
 
+import { useAppDispatch } from '../../redux/store';
+import { setCurrentUser } from '../../redux/user/user.actions';
+
 interface ModalProps {
   isShow: boolean;
   onHide: () => void;
-  setUserName: (value: string) => void;
 }
 
-const NameModal: React.FC<ModalProps> = ({ isShow, onHide, setUserName }) => {
+const NameModal: React.FC<ModalProps> = ({ isShow, onHide }) => {
+  const dispatch = useAppDispatch();
   const [inputValue, setInputValue] = useState('');
 
   const onSubmit = (): void => {
     if (inputValue) {
       onHide();
-      setUserName(inputValue);
+      dispatch(setCurrentUser(inputValue));
     }
   };
 

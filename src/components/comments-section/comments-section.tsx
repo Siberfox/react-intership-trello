@@ -1,30 +1,35 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { Modal, Button, FormControl, InputGroup } from 'react-bootstrap';
-import { StoreContext } from '../../store-context';
+
+import { RootState } from '../../redux/root-reducer';
+import { useAppDispatch } from '../../redux/store';
+import { addComment } from '../../redux/comments/comments.actions';
 
 import Comment from '../comment/comment';
 
 import './comments-section.styles.scss';
 
 interface CommentsSectionProps {
-  username: string;
   cardId: number;
 }
 
 const CommentsSection: React.FC<CommentsSectionProps> = ({
   cardId,
-  username,
 }) => {
+  const dispatch = useAppDispatch();
   const [newComment, setNewComment] = useState('');
-  const store = useContext(StoreContext);
-  const cardComments = store?.comments?.filter(
+  const cardComments = useSelector((state:RootState) => state?.comments?.filter(
     (item) => item.cardId === cardId,
+  ));
+  const username = useSelector((state:RootState) =>
+    state.user.currentUser,
   );
 
-  const addComment = () => {
+  const onAddComment = () => {
     if (newComment) {
-      store?.addNewComment(cardId, newComment);
+      dispatch(addComment([cardId, newComment, username]));
       setNewComment('');
     }
   };
@@ -44,7 +49,7 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
           value={newComment}
         />
         <InputGroup.Append>
-          <Button variant="outline-success" onClick={addComment}>
+          <Button variant="outline-success" onClick={onAddComment}>
             Сохранить
           </Button>
         </InputGroup.Append>
@@ -57,7 +62,6 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
               name={item.name}
               text={item.text}
               commentId={item.id}
-              username={username}
             />
           );
         })}

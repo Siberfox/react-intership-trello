@@ -1,10 +1,11 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 
 import { Modal, FormControl, InputGroup, Button } from 'react-bootstrap';
 
 import { PencilFill, TrashFill } from 'react-bootstrap-icons';
 
-import { StoreContext } from '../../store-context';
+import { useAppDispatch } from '../../redux/store';
+import { editCardName, deleteCard } from '../../redux/cards/cards.actions';
 
 import './card-title-sectin.styles.scss';
 
@@ -21,16 +22,16 @@ const CardTitleSection: React.FC<CardTitleSectionProps> = ({
   columnName,
   author,
 }) => {
+  const dispatch = useAppDispatch();
   const [newCardName, setNewCardName] = useState('');
-  const [editCardName, setEditCardName] = useState(false);
-  const store = useContext(StoreContext);
+  const [isEditCardName, setIsEditCardName] = useState(false);
 
   const addDescription = () => {
     if (newCardName) {
-      store?.editCardName(cardId, newCardName);
+      dispatch(editCardName([cardId, newCardName]));
       setNewCardName('');
     }
-    setEditCardName(false);
+    setIsEditCardName(false);
   };
 
   const onCardNameChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -43,7 +44,7 @@ const CardTitleSection: React.FC<CardTitleSectionProps> = ({
         id="contained-modal-title-vcenter"
         className="header__container"
       >
-        {editCardName ? (
+        {isEditCardName ? (
           <InputGroup className="mb-3">
             <FormControl
               id="basic-url"
@@ -69,13 +70,13 @@ const CardTitleSection: React.FC<CardTitleSectionProps> = ({
               <PencilFill
                 className="icon-edit"
                 size={20}
-                onClick={() => setEditCardName(true)}
+                onClick={() => setIsEditCardName(true)}
               />
               <TrashFill
                 className="icon-delete"
                 size={20}
                 onClick={() => {
-                  store?.deleteCard(cardId);
+                  dispatch(deleteCard(cardId));
                 }}
               />
             </div>
