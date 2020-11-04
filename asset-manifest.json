@@ -1,27 +1,27 @@
 {
   "files": {
     "main.css": "/react-intership-trello/static/css/main.ee6ab4e7.chunk.css",
-    "main.js": "/react-intership-trello/static/js/main.f9677d92.chunk.js",
-    "main.js.map": "/react-intership-trello/static/js/main.f9677d92.chunk.js.map",
-    "runtime-main.js": "/react-intership-trello/static/js/runtime-main.4221a704.js",
-    "runtime-main.js.map": "/react-intership-trello/static/js/runtime-main.4221a704.js.map",
+    "main.js": "/react-intership-trello/static/js/main.4410d1fc.chunk.js",
+    "main.js.map": "/react-intership-trello/static/js/main.4410d1fc.chunk.js.map",
+    "runtime-main.js": "/react-intership-trello/static/js/runtime-main.0896fdb3.js",
+    "runtime-main.js.map": "/react-intership-trello/static/js/runtime-main.0896fdb3.js.map",
     "static/css/2.20aa2d7b.chunk.css": "/react-intership-trello/static/css/2.20aa2d7b.chunk.css",
-    "static/js/2.4db375ed.chunk.js": "/react-intership-trello/static/js/2.4db375ed.chunk.js",
-    "static/js/2.4db375ed.chunk.js.map": "/react-intership-trello/static/js/2.4db375ed.chunk.js.map",
-    "static/js/3.9dbfafe3.chunk.js": "/react-intership-trello/static/js/3.9dbfafe3.chunk.js",
-    "static/js/3.9dbfafe3.chunk.js.map": "/react-intership-trello/static/js/3.9dbfafe3.chunk.js.map",
+    "static/js/2.426a668f.chunk.js": "/react-intership-trello/static/js/2.426a668f.chunk.js",
+    "static/js/2.426a668f.chunk.js.map": "/react-intership-trello/static/js/2.426a668f.chunk.js.map",
+    "static/js/3.71d71051.chunk.js": "/react-intership-trello/static/js/3.71d71051.chunk.js",
+    "static/js/3.71d71051.chunk.js.map": "/react-intership-trello/static/js/3.71d71051.chunk.js.map",
     "index.html": "/react-intership-trello/index.html",
     "static/css/2.20aa2d7b.chunk.css.map": "/react-intership-trello/static/css/2.20aa2d7b.chunk.css.map",
     "static/css/main.ee6ab4e7.chunk.css.map": "/react-intership-trello/static/css/main.ee6ab4e7.chunk.css.map",
-    "static/js/2.4db375ed.chunk.js.LICENSE.txt": "/react-intership-trello/static/js/2.4db375ed.chunk.js.LICENSE.txt",
+    "static/js/2.426a668f.chunk.js.LICENSE.txt": "/react-intership-trello/static/js/2.426a668f.chunk.js.LICENSE.txt",
     "static/media/comments.44398cb6.svg": "/react-intership-trello/static/media/comments.44398cb6.svg",
     "static/media/plus.05989119.svg": "/react-intership-trello/static/media/plus.05989119.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.4221a704.js",
+    "static/js/runtime-main.0896fdb3.js",
     "static/css/2.20aa2d7b.chunk.css",
-    "static/js/2.4db375ed.chunk.js",
+    "static/js/2.426a668f.chunk.js",
     "static/css/main.ee6ab4e7.chunk.css",
-    "static/js/main.f9677d92.chunk.js"
+    "static/js/main.4410d1fc.chunk.js"
   ]
 }
