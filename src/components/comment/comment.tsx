@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux';
 import { FormControl, InputGroup, Button } from 'react-bootstrap';
 import { PencilFill, TrashFill } from 'react-bootstrap-icons';
 
-import { RootState } from '../../redux/root-reducer';
 import { useAppDispatch } from '../../redux/store';
-import { editComment, deleteComment } from '../../redux/comments/comments.actions';
+import { editComment, deleteComment } from '../../redux/slices/commentsSlice';
+import { userSelector } from '../../redux/slices/userSlice';
 
 import './comment.styles.scss';
 
@@ -16,16 +16,12 @@ interface CommentProps {
   commentId: number;
 }
 
-const Comment: React.FC<CommentProps> = ({
-  name,
-  text,
-  commentId,
-}) => {
+const Comment: React.FC<CommentProps> = ({ name, text, commentId }) => {
   const dispatch = useAppDispatch();
   const [newComment, setNewComment] = useState('');
   const [isEditing, setIsEditing] = useState(false);
 
-  const username = useSelector((state:RootState) => state.user.currentUser);
+  const { username } = useSelector(userSelector);
 
   const onEditComment = () => {
     if (newComment) {

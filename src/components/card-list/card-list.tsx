@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { FormControl, Form, Button } from 'react-bootstrap';
 import { useAppDispatch } from '../../redux/store';
-import { RootState } from '../../redux/root-reducer';
+import { columnCardsSelector, addCard } from '../../redux/slices/cardsSlice';
+import { userSelector } from '../../redux/slices/userSlice';
 
-import { editColumnName } from '../../redux/columns/columns.actions';
-import { addCard } from '../../redux/cards/cards.actions';
+import { editColumnName } from '../../redux/slices/columnsSlice';
 
 
 import Card from '../card/card';
@@ -25,23 +25,20 @@ const CardList: React.FC<CardProps> = ({ item }) => {
   const [isShow, setIsShow] = useState(false);
   const [columnName, setColumnName] = useState('');
   const [newCard, setNewCard] = useState('');
-  const [columnNameHidden, setColumnNameHidden] = useState(false);
+  const [isColumnNameHidden, setIsColumnNameHidden] = useState(false);
 
-  const columnCards = useSelector((state:RootState) =>
-    state.cards.filter((card) => card.columnId === item.id),
-  );
-  const username = useSelector((state:RootState) =>
-    state.user.currentUser,
-  );
+  const memoizedColumnCards = useMemo(() => columnCardsSelector(item.id), [item.id]);
+  const columnCards = useSelector(memoizedColumnCards);
 
+  const { username } = useSelector(userSelector);
 
   const hideColumnName = (): void => {
-    setColumnNameHidden(true);
+    setIsColumnNameHidden(true);
   };
 
   const showColumnName = (e: React.KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === 'Enter') {
-      setColumnNameHidden(false);
+      setIsColumnNameHidden(false);
       if (columnName) {
         dispatch(editColumnName([item.id, columnName]));
       }
@@ -72,7 +69,7 @@ const CardList: React.FC<CardProps> = ({ item }) => {
 
   return (
     <div className="card-list__wrapper">
-      {columnNameHidden ? (
+      {isColumnNameHidden ? (
         <FormControl
           autoFocus
           aria-label="Default"
@@ -82,7 +79,18 @@ const CardList: React.FC<CardProps> = ({ item }) => {
           onKeyPress={showColumnName}
         />
       ) : (
-        <div onClick={hideColumnName} role='button' onKeyPress={(e) => {if (e.key === 'Enter'){hideColumnName();}}} tabIndex={0}><h4>{item.name}</h4></div>
+        <div
+          onClick={hideColumnName}
+          role="button"
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') {
+              hideColumnName();
+            }
+          }}
+          tabIndex={0}
+        >
+          <h4>{item.name}</h4>
+        </div>
       )}
 
       {columnCards?.map(
@@ -93,13 +101,7 @@ const CardList: React.FC<CardProps> = ({ item }) => {
           description: string;
           author: string;
         }) => {
-          return (
-            <Card
-              key={card.id}
-              card={card}
-              columnName={item.name}
-            />
-          );
+          return <Card key={card.id} card={card} columnName={item.name} />;
         },
       )}
 
@@ -118,11 +120,7 @@ const CardList: React.FC<CardProps> = ({ item }) => {
           </Button>
         </Form>
       ) : (
-        <button
-          className="card-list__new-card"
-          onClick={showNewCardInput}
-          type="button"
-        >
+        <button className="card-list__new-card" onClick={showNewCardInput} type="button">
           <img src={Plus} alt="plus" />
           Добавить карточку
         </button>

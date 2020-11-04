@@ -4,7 +4,7 @@ import { Modal, Button, FormControl, InputGroup } from 'react-bootstrap';
 import { PencilFill, TrashFill } from 'react-bootstrap-icons';
 
 import { useAppDispatch } from '../../redux/store';
-import { addDescription, deleteDescription } from '../../redux/cards/cards.actions';
+import { addDescription, deleteDescription } from '../../redux/slices/cardsSlice';
 
 import './description-section.styles.scss';
 
@@ -13,10 +13,7 @@ interface DescriptionSectionProps {
   description: string;
 }
 
-const DescriptionSection: React.FC<DescriptionSectionProps> = ({
-  cardId,
-  description,
-}) => {
+const DescriptionSection: React.FC<DescriptionSectionProps> = ({ cardId, description }) => {
   const dispatch = useAppDispatch();
   const [newDescription, setNewDescription] = useState('');
   const [isDescriptionEditing, setIsDescriptionEditing] = useState(false);
@@ -29,9 +26,7 @@ const DescriptionSection: React.FC<DescriptionSectionProps> = ({
     setIsDescriptionEditing(false);
   };
 
-  const onDescriptionChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ): void => {
+  const onDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setNewDescription(e.target.value);
   };
 

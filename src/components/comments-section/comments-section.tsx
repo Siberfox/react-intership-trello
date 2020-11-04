@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
 import { Modal, Button, FormControl, InputGroup } from 'react-bootstrap';
 
-import { RootState } from '../../redux/root-reducer';
 import { useAppDispatch } from '../../redux/store';
-import { addComment } from '../../redux/comments/comments.actions';
+import { addComment, cardCommentsSelector } from '../../redux/slices/commentsSlice';
+import { userSelector } from '../../redux/slices/userSlice';
 
 import Comment from '../comment/comment';
 
@@ -15,17 +15,13 @@ interface CommentsSectionProps {
   cardId: number;
 }
 
-const CommentsSection: React.FC<CommentsSectionProps> = ({
-  cardId,
-}) => {
+const CommentsSection: React.FC<CommentsSectionProps> = ({ cardId }) => {
   const dispatch = useAppDispatch();
   const [newComment, setNewComment] = useState('');
-  const cardComments = useSelector((state:RootState) => state?.comments?.filter(
-    (item) => item.cardId === cardId,
-  ));
-  const username = useSelector((state:RootState) =>
-    state.user.currentUser,
-  );
+
+  const memoizedCardComments = useMemo(() => cardCommentsSelector(cardId), [cardId]);
+  const cardComments = useSelector(memoizedCardComments);
+  const { username } = useSelector(userSelector);
 
   const onAddComment = () => {
     if (newComment) {
@@ -56,14 +52,7 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
       </InputGroup>
       <ul className="comments-list">
         {cardComments?.map((item) => {
-          return (
-            <Comment
-              key={item.id}
-              name={item.name}
-              text={item.text}
-              commentId={item.id}
-            />
-          );
+          return <Comment key={item.id} name={item.name} text={item.text} commentId={item.id} />;
         })}
       </ul>
     </Modal.Footer>

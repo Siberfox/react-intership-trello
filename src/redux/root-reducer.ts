@@ -2,10 +2,10 @@ import { combineReducers } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import { cardsReducer } from './cards/cards.reducer';
-import { commentsReducer } from './comments/comments.reducer';
-import { columnsReducer } from './columns/columns.reducer';
-import { userReducer } from './user/user.reducer';
+import commentsReducer from './slices/commentsSlice';
+import columnsReducer from './slices/columnsSlice';
+import userReducer from './slices/userSlice';
+import cardsReducer from './slices/cardsSlice';
 
 const persistConfig = {
   key: 'root',

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/root-reducer';
+import { columnsSelector } from '../../redux/slices/columnsSlice';
 
 import CardList from '../card-list/card-list';
 import Plus from '../../assets/plus.svg';
@@ -8,9 +8,7 @@ import Plus from '../../assets/plus.svg';
 import './board.styles.scss';
 
 const Board: React.FC = () => {
-  const columns = useSelector((state:RootState) =>
-    state.columns,
-  );
+  const columns = useSelector(columnsSelector);
 
   return (
     <div className="board__wrapper">

@@ -21,7 +21,7 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({ card, columnName }) => {
   const [isShow, setIsShow] = useState(false);
 
-  const comments = useSelector((state:RootState) =>
+  const comments = useSelector((state: RootState) =>
     state.comments.filter((item) => item.cardId === card.id),
   );
 
@@ -29,7 +29,17 @@ const Card: React.FC<CardProps> = ({ card, columnName }) => {
   const handleShow = () => setIsShow(true);
 
   return (
-    <div className="card__wrapper" onClick={handleShow} onKeyPress={(e) => {if (e.key === 'Enter'){handleShow();}}} role="button" tabIndex={0}>
+    <div
+      className="card__wrapper"
+      onClick={handleShow}
+      onKeyPress={(e) => {
+        if (e.key === 'Enter') {
+          handleShow();
+        }
+      }}
+      role="button"
+      tabIndex={0}
+    >
       <p>{card.name}</p>
 
       {comments?.length ? (

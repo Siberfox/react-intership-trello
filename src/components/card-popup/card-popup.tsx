@@ -28,7 +28,16 @@ const CardPopup: React.FC<CardPopupProps> = ({
   author,
 }) => {
   return (
-    <div onClick={(e) => e.stopPropagation()} role='button' onKeyPress={(e) => {if (e.key === 'Enter'){e.stopPropagation();}}} tabIndex={0}>
+    <div
+      onClick={(e) => e.stopPropagation()}
+      role="button"
+      onKeyPress={(e) => {
+        if (e.key === 'Enter') {
+          e.stopPropagation();
+        }
+      }}
+      tabIndex={0}
+    >
       <Modal
         show={isShow}
         onHide={onHide}

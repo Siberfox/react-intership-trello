@@ -5,7 +5,7 @@ import { Modal, FormControl, InputGroup, Button } from 'react-bootstrap';
 import { PencilFill, TrashFill } from 'react-bootstrap-icons';
 
 import { useAppDispatch } from '../../redux/store';
-import { editCardName, deleteCard } from '../../redux/cards/cards.actions';
+import { editCardName, deleteCard } from '../../redux/slices/cardsSlice';
 
 import './card-title-sectin.styles.scss';
 
@@ -40,10 +40,7 @@ const CardTitleSection: React.FC<CardTitleSectionProps> = ({
 
   return (
     <Modal.Header closeButton>
-      <Modal.Title
-        id="contained-modal-title-vcenter"
-        className="header__container"
-      >
+      <Modal.Title id="contained-modal-title-vcenter" className="header__container">
         {isEditCardName ? (
           <InputGroup className="mb-3">
             <FormControl
@@ -67,11 +64,7 @@ const CardTitleSection: React.FC<CardTitleSectionProps> = ({
               <small>({author})</small>
             </p>
             <div className="header__icons">
-              <PencilFill
-                className="icon-edit"
-                size={20}
-                onClick={() => setIsEditCardName(true)}
-              />
+              <PencilFill className="icon-edit" size={20} onClick={() => setIsEditCardName(true)} />
               <TrashFill
                 className="icon-delete"
                 size={20}

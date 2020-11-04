@@ -3,21 +3,15 @@ import React, { useState } from 'react';
 import { Modal, Button, FormControl } from 'react-bootstrap';
 
 import { useAppDispatch } from '../../redux/store';
-import { setCurrentUser } from '../../redux/user/user.actions';
+import { setUsername } from '../../redux/slices/userSlice';
 
-interface ModalProps {
-  isShow: boolean;
-  onHide: () => void;
-}
-
-const NameModal: React.FC<ModalProps> = ({ isShow, onHide }) => {
+const NameModal: React.FC = () => {
   const dispatch = useAppDispatch();
   const [inputValue, setInputValue] = useState('');
 
   const onSubmit = (): void => {
     if (inputValue) {
-      onHide();
-      dispatch(setCurrentUser(inputValue));
+      dispatch(setUsername(inputValue));
     }
   };
 
@@ -33,17 +27,14 @@ const NameModal: React.FC<ModalProps> = ({ isShow, onHide }) => {
 
   return (
     <Modal
-      show={isShow}
-      onHide={onHide}
+      show={true}
       size="sm"
       aria-labelledby="contained-modal-title-vcenter"
       centered
       backdrop="static"
     >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Как вас зовут?
-        </Modal.Title>
+      <Modal.Header>
+        <Modal.Title id="contained-modal-title-vcenter">Как вас зовут?</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <FormControl
